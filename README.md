@@ -53,3 +53,23 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 |:---------------|:---------------------------------|:---------|:------------------------------------|:---------|
 | ``Enable``     | Enable flag to activate tracing. | `bool`   | `FALSE`                             | **NO**   |
 | ``JaegerHost`` | Jaeger host address.             | `string` | `http://localhost:14268/api/traces` | **NO**   |
+
+## 2. Load data
+
+First you need to get dependency `go_config` dependency by calling `go get`, with the wanted release.
+
+``
+go get github.com/ribeirohugo/go_config@latest
+``
+
+Then, data can be loaded by calling `Load` method.
+It requires a `config.toml` file properly fulfilled.
+
+```
+cfg, err := config.Load(configFile)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+It will return a `Config` struct variable or an error, if anything unexpected occurs.
