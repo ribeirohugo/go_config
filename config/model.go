@@ -1,4 +1,4 @@
-package model
+package config
 
 import "fmt"
 
@@ -40,7 +40,7 @@ type Token struct {
 	Secret string `toml:"secret" yaml:"secret"`
 }
 
-// Tracer holds jaeger tracer config attributes
+// Tracer holds jaeger tracer toml attributes
 type Tracer struct {
 	Enabled    bool   `toml:"enabled" yaml:"enabled"`
 	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host"`
