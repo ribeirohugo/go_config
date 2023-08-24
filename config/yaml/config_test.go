@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const configYmlContent = `environment: "dev"
+const configContent = `environment: "dev"
 service: "safesystem"
 
 server:
@@ -48,7 +48,7 @@ tracer:
   jaeger_host: "http://tracer.domain"
 `
 
-const configYmlContentInvalid = `token: 123
+const configContentInvalid = `token: 123
 server:
 	host: localhost
 	port: "9399"
@@ -108,7 +108,7 @@ func TestLoadYaml(t *testing.T) {
 
 	t.Run("should return a valid toml", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
-			tempFile := createTempFile(t, configYmlContent)
+			tempFile := createTempFile(t, configContent)
 
 			cfg, err := Load(tempFile.Name())
 			require.NoError(t, err)
@@ -154,7 +154,7 @@ func TestLoadYaml(t *testing.T) {
 		})
 
 		t.Run("invalid file content", func(t *testing.T) {
-			tempFile := createTempFile(t, configYmlContentInvalid)
+			tempFile := createTempFile(t, configContentInvalid)
 
 			cfg, err := Load(tempFile.Name())
 			assert.Equal(t, config.Config{}, cfg)
@@ -168,7 +168,7 @@ func TestLoadYaml(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "toml.toml")
+	tempFile, err := os.CreateTemp("", "test.yaml")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)

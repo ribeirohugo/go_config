@@ -8,7 +8,7 @@ import (
 	"github.com/ribeirohugo/go_config/config"
 )
 
-// Load loads configurations from a given toml file path.
+// Load loads configurations from a given json file path.
 func Load(filePath string) (config.Config, error) {
 	file, err := os.Open(filePath)
 	if err != nil {

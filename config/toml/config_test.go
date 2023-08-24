@@ -106,7 +106,7 @@ func TestLoad(t *testing.T) {
 		Service:     service,
 	}
 
-	t.Run("should return a valid toml", func(t *testing.T) {
+	t.Run("should return a valid config from toml file", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
 			tempFile := createTempFile(t, configContent)
 
@@ -168,7 +168,7 @@ func TestLoad(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "toml.toml")
+	tempFile, err := os.CreateTemp("", "test.toml")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)
