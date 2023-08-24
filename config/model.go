@@ -1,49 +1,54 @@
 package config
 
-import "fmt"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 // Config holds configurations data and methods.
 type Config struct {
-	Server Server `toml:"server" yaml:"server" json:"server,omitempty"`
-	Token  Token  `toml:"token" yaml:"token" json:"token,omitempty"`
+	Server Server `toml:"server" yaml:"server" json:"server,omitempty" xml:"server"`
+	Token  Token  `toml:"token" yaml:"token" xml:"token" json:"token,omitempty" xml:"token"`
 
-	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb,omitempty"`
-	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty"`
-	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty"`
+	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb,omitempty" xml:"mongodb"`
+	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
+	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
-	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer,omitempty"`
+	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
 
-	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty"`
-	Service     string `toml:"service" yaml:"service" json:"service,omitempty"`
+	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
+	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
+
+	XMLName xml.Name `xml:"config"`
 }
 
 // Database holds database connection configurations.
 type Database struct {
-	Host           string `toml:"host" yaml:"host" json:"host,omitempty"`
-	Port           int    `toml:"port" yaml:"port" json:"port,omitempty"`
-	User           string `toml:"user" yaml:"user" json:"user,omitempty"`
-	Password       string `toml:"password" yaml:"password" json:"password,omitempty"`
-	Db             string `toml:"database" yaml:"database" json:"database,omitempty"`
-	MigrationsPath string `toml:"migrations_path" yaml:"migrations_path" json:"migrations_path,omitempty"`
+	Host           string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
+	Port           int    `toml:"port" yaml:"port" json:"port,omitempty" xml:"port"`
+	User           string `toml:"user" yaml:"user" json:"user,omitempty" xml:"user"`
+	Password       string `toml:"password" yaml:"password" json:"password,omitempty" xml:"password"`
+	Db             string `toml:"database" yaml:"database" json:"database,omitempty" xml:"database"`
+	MigrationsPath string `toml:"migrations_path" yaml:"migrations_path" json:"migrations_path,omitempty" xml:"migrations_path"`
 }
 
 // Server holds server host and port configurations.
 type Server struct {
-	Host           string   `toml:"host" yaml:"host" json:"host,omitempty"`
-	Port           int      `toml:"port" yaml:"port" json:"port,omitempty"`
-	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins,omitempty"`
+	Host           string   `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
+	Port           int      `toml:"port" yaml:"port" json:"port,omitempty" xml:"port"`
+	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins,omitempty" xml:"allowed_origins"`
 }
 
 // Token holds application token secret and expire time in seconds.
 type Token struct {
-	MaxAge int    `toml:"max_age" yaml:"max_age" json:"max_age,omitempty"`
-	Secret string `toml:"secret" yaml:"secret" json:"secret,omitempty"`
+	MaxAge int    `toml:"max_age" yaml:"max_age" json:"max_age,omitempty" xml:"max_age"`
+	Secret string `toml:"secret" yaml:"secret" json:"secret,omitempty" xml:"secret"`
 }
 
 // Tracer holds jaeger tracer toml attributes
 type Tracer struct {
-	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty"`
-	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty"`
+	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
+	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty" xml:"jaeger_host"`
 }
 
 // GetAddress returns website address.
