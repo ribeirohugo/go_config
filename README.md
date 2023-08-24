@@ -1,7 +1,7 @@
 # Go Config
 
 **Go Config** is a simple package that allows to load basic data for a Golang application.
-It supports `toml`, `json` or `yaml` file to instantiate env variables.
+It supports `toml`, `json`, `yaml` or `xml` file or content to instantiate environment variables.
 
 ## 1. Config
 
@@ -96,6 +96,19 @@ Then, data can be loaded by calling `Load` method, with a `config.json` file pro
 
 ```
 cfg, err := json.Load(configFile)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
+
+### 2.4. XML
+
+Then, data can be loaded by calling `Load` method, with a `config.json` file properly fulfilled.
+
+```
+cfg, err := xml.Load(configFile)
 if err != nil {
     log.Fatal(err)
 }

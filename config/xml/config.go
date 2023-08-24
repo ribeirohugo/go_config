@@ -46,3 +46,31 @@ func Load(filePath string) (config.Config, error) {
 
 	return cfg, nil
 }
+
+// LoadContent loads configurations from a given xml bytes content.
+func LoadContent(content []byte) (config.Config, error) {
+	cfg := config.Config{
+		MySql: config.Database{
+			MigrationsPath: config.DefaultMigrationsMysql,
+		},
+		MongoDb: config.Database{
+			MigrationsPath: config.DefaultMigrationsMongo,
+		},
+		Postgres: config.Database{
+			MigrationsPath: config.DefaultMigrationsPostgres,
+		},
+		Token: config.Token{
+			MaxAge: config.DefaultSessionMaxAge,
+		},
+		Tracer: config.Tracer{
+			JaegerHost: config.DefaultJaegerHost,
+		},
+	}
+
+	err := xml.Unmarshal(content, &cfg)
+	if err != nil {
+		return config.Config{}, err
+	}
+
+	return cfg, nil
+}
