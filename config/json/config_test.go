@@ -168,6 +168,99 @@ func TestLoad(t *testing.T) {
 	})
 }
 
+func TestLoadContent(t *testing.T) {
+	const (
+		environment = "dev"
+		service     = "safesystem"
+		serverHost  = "localhost"
+		serverPort  = 8080
+		database    = "database"
+		password    = "password"
+		username    = "username"
+	)
+	configTest := config.Config{
+		Server: config.Server{
+			Host:           serverHost,
+			Port:           serverPort,
+			AllowedOrigins: []string{"http://localhost:8080"},
+		},
+		Token: config.Token{
+			MaxAge: 100,
+			Secret: "token",
+		},
+		MongoDb: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsMongo,
+		},
+		MySql: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsMysql,
+		},
+		Postgres: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsPostgres,
+		},
+		Tracer: config.Tracer{
+			Enabled:    true,
+			JaegerHost: "http://tracer.domain",
+		},
+		Environment: environment,
+		Service:     service,
+	}
+
+	t.Run("should return a valid config from json", func(t *testing.T) {
+		t.Run("with all fields", func(t *testing.T) {
+			cfg, err := LoadContent([]byte(configContent))
+			require.NoError(t, err)
+			assert.Equal(t, configTest, cfg)
+		})
+
+		t.Run("without optional fields", func(t *testing.T) {
+			expectedConfig := config.Config{
+				MySql: config.Database{
+					MigrationsPath: config.DefaultMigrationsMysql,
+				},
+				MongoDb: config.Database{
+					MigrationsPath: config.DefaultMigrationsMongo,
+				},
+				Postgres: config.Database{
+					MigrationsPath: config.DefaultMigrationsPostgres,
+				},
+				Tracer: config.Tracer{
+					JaegerHost: config.DefaultJaegerHost,
+				},
+				Token: config.Token{
+					MaxAge: config.DefaultSessionMaxAge,
+				},
+			}
+
+			cfg, err := LoadContent([]byte("{}"))
+			require.NoError(t, err)
+			assert.Equal(t, expectedConfig, cfg)
+		})
+	})
+
+	t.Run("with error return", func(t *testing.T) {
+		t.Run("invalid file content", func(t *testing.T) {
+			cfg, err := LoadContent([]byte(""))
+			assert.Equal(t, config.Config{}, cfg)
+			assert.Error(t, err)
+		})
+	})
+}
+
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
