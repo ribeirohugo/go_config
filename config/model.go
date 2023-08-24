@@ -4,46 +4,46 @@ import "fmt"
 
 // Config holds configurations data and methods.
 type Config struct {
-	Server Server `toml:"server" yaml:"server" json:"server"`
-	Token  Token  `toml:"token" yaml:"token" json:"token"`
+	Server Server `toml:"server" yaml:"server" json:"server,omitempty"`
+	Token  Token  `toml:"token" yaml:"token" json:"token,omitempty"`
 
-	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb"`
-	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql"`
-	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres"`
+	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb,omitempty"`
+	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty"`
+	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty"`
 
-	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer"`
+	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer,omitempty"`
 
-	Environment string `toml:"environment" yaml:"environment" json:"environment"`
-	Service     string `toml:"service" yaml:"service" json:"service"`
+	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty"`
+	Service     string `toml:"service" yaml:"service" json:"service,omitempty"`
 }
 
 // Database holds database connection configurations.
 type Database struct {
-	Host           string `toml:"host" yaml:"host" json:"host"`
-	Port           int    `toml:"port" yaml:"port" json:"port"`
-	User           string `toml:"user" yaml:"user" json:"user"`
-	Password       string `toml:"password" yaml:"password" json:"password"`
-	Db             string `toml:"database" yaml:"database" json:"database"`
-	MigrationsPath string `toml:"migrations_path" yaml:"migrations_path" json:"migrations_path"`
+	Host           string `toml:"host" yaml:"host" json:"host,omitempty"`
+	Port           int    `toml:"port" yaml:"port" json:"port,omitempty"`
+	User           string `toml:"user" yaml:"user" json:"user,omitempty"`
+	Password       string `toml:"password" yaml:"password" json:"password,omitempty"`
+	Db             string `toml:"database" yaml:"database" json:"database,omitempty"`
+	MigrationsPath string `toml:"migrations_path" yaml:"migrations_path" json:"migrations_path,omitempty"`
 }
 
 // Server holds server host and port configurations.
 type Server struct {
-	Host           string   `toml:"host" yaml:"host" json:"host"`
-	Port           int      `toml:"port" yaml:"port" json:"port"`
-	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins"`
+	Host           string   `toml:"host" yaml:"host" json:"host,omitempty"`
+	Port           int      `toml:"port" yaml:"port" json:"port,omitempty"`
+	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins,omitempty"`
 }
 
 // Token holds application token secret and expire time in seconds.
 type Token struct {
-	MaxAge int    `toml:"max_age" yaml:"max_age" json:"max_age"`
-	Secret string `toml:"secret" yaml:"secret" json:"secret"`
+	MaxAge int    `toml:"max_age" yaml:"max_age" json:"max_age,omitempty"`
+	Secret string `toml:"secret" yaml:"secret" json:"secret,omitempty"`
 }
 
 // Tracer holds jaeger tracer toml attributes
 type Tracer struct {
-	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled"`
-	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host"`
+	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty"`
+	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty"`
 }
 
 // GetAddress returns website address.
