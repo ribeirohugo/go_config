@@ -280,7 +280,7 @@ func TestLoadContent(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "test.toml")
+	tempFile, err := os.CreateTemp("", "test.xml")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)
