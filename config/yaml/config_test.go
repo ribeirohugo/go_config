@@ -168,7 +168,7 @@ func TestLoadYaml(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "toml.toml")
+	tempFile, err := os.CreateTemp("", "test.yaml")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)
