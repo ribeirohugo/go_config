@@ -4,7 +4,7 @@ service: "safesystem"
 server:
   host: "localhost"
   port: 8080
-  allowed_origins: ['http://localhost:4200']
+  allowed_origins: ["http://localhost:4200"]
 
 token:
   secret: "token123"
