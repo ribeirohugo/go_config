@@ -1,11 +1,11 @@
 # Go Config
 
 **Go Config** is a simple package that allows to load basic data for a Golang application.
-It requires a `toml` file to instantiate env variables.
+It supports `toml` or `yaml` file to instantiate env variables.
 
 ## 1. Config
 
-Before to run application you may setup ``config.toml`` with ``Config`` values.
+Before to run application you may setup a supported``config.toml`` with ``Config`` values.
 Check out the following tables to know all ``Config`` parameters detailed.
 
 | Parameter       | Description                           | Type       | Default | Required |
@@ -54,6 +54,7 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``Enable``     | Enable flag to activate tracing. | `bool`   | `FALSE`                             | **NO**   |
 | ``JaegerHost`` | Jaeger host address.             | `string` | `http://localhost:14268/api/traces` | **NO**   |
 
+
 ## 2. Load data
 
 First you need to get dependency `go_config` dependency by calling `go get`, with the wanted release.
@@ -62,14 +63,29 @@ First you need to get dependency `go_config` dependency by calling `go get`, wit
 go get github.com/ribeirohugo/go_config@latest
 ``
 
+### 2.1. Toml
+
 Then, data can be loaded by calling `Load` method.
-It requires a `config.toml` file properly fulfilled.
+It supports a `config.toml` file properly fulfilled.
 
 ```
-cfg, err := config.Load(configFile)
+cfg, err := toml.Load(configFile)
 if err != nil {
     log.Fatal(err)
 }
 ```
 
-It will return a `Config` struct variable or an error, if anything unexpected occurs.
+It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
+
+### 2.2. YAML
+
+Then, data can be loaded by calling `Load` method, with a `config.yaml` file properly fulfilled.
+
+```
+cfg, err := yaml.Load(configFile)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
