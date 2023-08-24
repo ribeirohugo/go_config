@@ -8,7 +8,7 @@ import (
 // Config holds configurations data and methods.
 type Config struct {
 	Server Server `toml:"server" yaml:"server" json:"server,omitempty" xml:"server"`
-	Token  Token  `toml:"token" yaml:"token" xml:"token" json:"token,omitempty" xml:"token"`
+	Token  Token  `toml:"token" yaml:"token" json:"token,omitempty" xml:"token"`
 
 	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb,omitempty" xml:"mongodb"`
 	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
