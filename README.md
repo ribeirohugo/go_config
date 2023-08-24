@@ -1,7 +1,7 @@
 # Go Config
 
 **Go Config** is a simple package that allows to load basic data for a Golang application.
-It supports `toml`, `json` and `yaml` file to instantiate env variables.
+It supports `toml`, `json` or `yaml` file to instantiate env variables.
 
 ## 1. Config
 
