@@ -1,4 +1,6 @@
-package config
+package model
+
+import "fmt"
 
 // Config holds configurations data and methods.
 type Config struct {
@@ -42,4 +44,27 @@ type Token struct {
 type Tracer struct {
 	Enabled    bool   `toml:"enabled" yaml:"enabled"`
 	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host"`
+}
+
+// GetAddress returns website address.
+func (s Server) GetAddress() string {
+	return fmt.Sprintf("%s:%d", s.Host, s.Port)
+}
+
+// MongodbAddress returns MongoDB connection address.
+func (c Config) MongodbAddress() string {
+	return fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?authSource=admin&ssl=false",
+		c.MongoDb.User, c.MongoDb.Password, c.MongoDb.Host, c.MongoDb.Port, c.MongoDb.Db)
+}
+
+// MysqlAddress returns MySQL connection address.
+func (c Config) MysqlAddress() string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
+		c.MySql.User, c.MySql.Password, c.MySql.Host, c.MySql.Port, c.MySql.Db)
+}
+
+// PostgresAddress returns PostgreSQL connection address.
+func (c Config) PostgresAddress() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable",
+		c.Postgres.User, c.Postgres.Password, c.Postgres.Host, c.Postgres.Port, c.Postgres.Db)
 }
