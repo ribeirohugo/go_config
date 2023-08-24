@@ -9,15 +9,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const (
-	defaultMigrationsMongo    = "file://migrations/mongo"
-	defaultMigrationsMysql    = "file://migrations/mysql"
-	defaultMigrationsPostgres = "file://migrations/postgres"
-	defaultSessionMaxAge      = 86400 // 24 hours
-
-	defaultJaegerHost = "http://localhost:14268/api/traces"
-)
-
 // Load loads configurations from a given yaml file path.
 func Load(filePath string) (config.Config, error) {
 	file, err := os.Open(filePath)
@@ -33,19 +24,19 @@ func Load(filePath string) (config.Config, error) {
 
 	cfg := config.Config{
 		MySql: config.Database{
-			MigrationsPath: defaultMigrationsMysql,
+			MigrationsPath: config.DefaultMigrationsMysql,
 		},
 		MongoDb: config.Database{
-			MigrationsPath: defaultMigrationsMongo,
+			MigrationsPath: config.DefaultMigrationsMongo,
 		},
 		Postgres: config.Database{
-			MigrationsPath: defaultMigrationsPostgres,
+			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
 		Token: config.Token{
-			MaxAge: defaultSessionMaxAge,
+			MaxAge: config.DefaultSessionMaxAge,
 		},
 		Tracer: config.Tracer{
-			JaegerHost: defaultJaegerHost,
+			JaegerHost: config.DefaultJaegerHost,
 		},
 	}
 

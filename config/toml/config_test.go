@@ -80,7 +80,7 @@ func TestLoad(t *testing.T) {
 			User:           username,
 			Password:       password,
 			Db:             database,
-			MigrationsPath: defaultMigrationsMongo,
+			MigrationsPath: config.DefaultMigrationsMongo,
 		},
 		MySql: config.Database{
 			Host:           serverHost,
@@ -88,7 +88,7 @@ func TestLoad(t *testing.T) {
 			User:           username,
 			Password:       password,
 			Db:             database,
-			MigrationsPath: defaultMigrationsMysql,
+			MigrationsPath: config.DefaultMigrationsMysql,
 		},
 		Postgres: config.Database{
 			Host:           serverHost,
@@ -96,7 +96,7 @@ func TestLoad(t *testing.T) {
 			User:           username,
 			Password:       password,
 			Db:             database,
-			MigrationsPath: defaultMigrationsPostgres,
+			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
@@ -120,19 +120,19 @@ func TestLoad(t *testing.T) {
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
 				MySql: config.Database{
-					MigrationsPath: defaultMigrationsMysql,
+					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
-					MigrationsPath: defaultMigrationsMongo,
+					MigrationsPath: config.DefaultMigrationsMongo,
 				},
 				Postgres: config.Database{
-					MigrationsPath: defaultMigrationsPostgres,
+					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
 				Tracer: config.Tracer{
-					JaegerHost: defaultJaegerHost,
+					JaegerHost: config.DefaultJaegerHost,
 				},
 				Token: config.Token{
-					MaxAge: defaultSessionMaxAge,
+					MaxAge: config.DefaultSessionMaxAge,
 				},
 			}
 
