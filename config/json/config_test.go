@@ -253,11 +253,9 @@ func TestLoadContent(t *testing.T) {
 	})
 
 	t.Run("with error return", func(t *testing.T) {
-		t.Run("invalid file content", func(t *testing.T) {
-			cfg, err := LoadContent([]byte(""))
-			assert.Equal(t, config.Config{}, cfg)
-			assert.Error(t, err)
-		})
+		cfg, err := LoadContent([]byte(""))
+		assert.Equal(t, config.Config{}, cfg)
+		assert.Error(t, err)
 	})
 }
 
