@@ -1,0 +1,35 @@
+environment: "dev"
+service: "safesystem"
+
+server:
+  host: "localhost"
+  port: 8080
+  allowed_origins: ["http://localhost:4200"]
+
+token:
+  secret: "token123"
+  max_age: 36000
+
+postgres:
+  database: "test_database"
+  host: "localhost"
+  password: "password"
+  port: 5432
+  user: "username"
+
+mongodb:
+  database: ""
+  host: "localhost"
+  password: "password"
+  port: 27017
+  user: "username"
+
+mysql:
+  database: ""
+  host: "localhost"
+  password: "password"
+  port: 3306
+  user: "username"
+
+tracer:
+  enabled: false
