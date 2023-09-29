@@ -44,6 +44,10 @@ const configContent = `<config>
         <port>8080</port>
         <user>username</user>
     </postgres>
+    <audit>
+        <enabled>true</enabled>
+        <host>audit.domain</host>
+    </audit>
     <tracer>
         <enabled>true</enabled>
         <jaeger_host>http://tracer.domain</jaeger_host>
@@ -71,6 +75,7 @@ func TestLoad(t *testing.T) {
 		password     = "password"
 		username     = "username"
 		xmlLocalName = "config"
+		auditHost    = "audit.domain"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -108,6 +113,10 @@ func TestLoad(t *testing.T) {
 			Password:       password,
 			Db:             database,
 			MigrationsPath: config.DefaultMigrationsPostgres,
+		},
+		Audit: config.Audit{
+			Enabled: true,
+			Host:    auditHost,
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
@@ -189,6 +198,7 @@ func TestLoadContent(t *testing.T) {
 		password     = "password"
 		username     = "username"
 		xmlLocalName = "config"
+		auditHost    = "audit.domain"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -226,6 +236,10 @@ func TestLoadContent(t *testing.T) {
 			Password:       password,
 			Db:             database,
 			MigrationsPath: config.DefaultMigrationsPostgres,
+		},
+		Audit: config.Audit{
+			Enabled: true,
+			Host:    auditHost,
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
