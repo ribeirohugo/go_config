@@ -14,6 +14,7 @@ type Config struct {
 	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
+	Audit  Audit  `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
 	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
@@ -45,10 +46,16 @@ type Token struct {
 	Secret string `toml:"secret" yaml:"secret" json:"secret,omitempty" xml:"secret"`
 }
 
-// Tracer holds jaeger tracer toml attributes
+// Tracer holds jaeger tracer toml attributes.
 type Tracer struct {
 	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
 	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty" xml:"jaeger_host"`
+}
+
+// Audit holds auditing config attributes.
+type Audit struct {
+	Enabled bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
+	Host    string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
 }
 
 // GetAddress returns website address.

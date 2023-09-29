@@ -17,6 +17,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[mongodb]``   | Postgres database config data.        | `Database` | ` `     | **YES**  |
 | ``[mysql]``     | MySql database config data.           | `Database` | ` `     | **YES**  |
 | ``[postgres]``  | Postgres database config data.        | `Database` | ` `     | **YES**  |
+| ``[audit]``     | Auditing options config data.         | `Audit`    | ` `     | **YES**  |
 | ``[tracer]``    | Tracing options config data.          | `Tracer`   | ` `     | **YES**  |
 
 ### 1.1. Server type
@@ -47,7 +48,15 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``secret``     | Website token secret string.              | `string` | ` `      | **YES**  |
 | ``max_age``    | Maximum duration of a token (in seconds). | `int`    | `86400`  | **NO**   |
 
-### 1.4. Tracer type
+### 1.4. Audit type
+
+| Parameter  | Description                       | Type     | Default | Required |
+|:-----------|:----------------------------------|:---------|:--------|:---------|
+| ``Enable`` | Enable flag to activate auditing. | `bool`   | `FALSE` | **NO**   |
+| ``Host``   | Auditing server host address.     | `string` | ` `     | **NO**   |
+
+
+### 1.5. Tracer type
 
 | Parameter      | Description                      | Type     | Default                             | Required |
 |:---------------|:---------------------------------|:---------|:------------------------------------|:---------|
