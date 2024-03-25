@@ -19,7 +19,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.20"
+          go-version: "1.22"
           cache: true
 
       - name: Install mockgen
@@ -29,9 +29,9 @@ jobs:
         run: go generate ./...
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v4
         with:
-          version: v1.51.2
+          version: v1.57.1
           skip-pkg-cache: true
           skip-build-cache: true
 
@@ -49,7 +49,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.20"
+          go-version: "1.22"
           cache: true
 
       - name: Install mockgen
