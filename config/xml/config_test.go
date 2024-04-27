@@ -50,7 +50,8 @@ const configContent = `<config>
     </audit>
     <tracer>
         <enabled>true</enabled>
-        <jaeger_host>http://tracer.domain</jaeger_host>
+        <jaeger_host>https://tracer.domain</jaeger_host>
+        <host>https://tracer.domain</host>
     </tracer>
 </config>
 `
@@ -76,6 +77,7 @@ func TestLoad(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		tracerHost   = "https://tracer.domain"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -120,7 +122,8 @@ func TestLoad(t *testing.T) {
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
-			JaegerHost: "http://tracer.domain",
+			JaegerHost: tracerHost,
+			Host:       tracerHost,
 		},
 		Environment: environment,
 		Service:     service,
@@ -199,6 +202,7 @@ func TestLoadContent(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		tracerHost   = "https://tracer.domain"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -243,7 +247,8 @@ func TestLoadContent(t *testing.T) {
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
-			JaegerHost: "http://tracer.domain",
+			JaegerHost: tracerHost,
+			Host:       tracerHost,
 		},
 		Environment: environment,
 		Service:     service,
