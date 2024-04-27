@@ -58,10 +58,11 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 
 ### 1.5. Tracer type
 
-| Parameter      | Description                      | Type     | Default                             | Required |
-|:---------------|:---------------------------------|:---------|:------------------------------------|:---------|
-| ``Enable``     | Enable flag to activate tracing. | `bool`   | `FALSE`                             | **NO**   |
-| ``JaegerHost`` | Jaeger host address.             | `string` | `http://localhost:14268/api/traces` | **NO**   |
+| Parameter      | Description                           | Type     | Default                             | Required |
+|:---------------|:--------------------------------------|:---------|:------------------------------------|:---------|
+| ``Enable``     | Enable flag to activate tracing.      | `bool`   | `FALSE`                             | **NO**   |
+| ``JaegerHost`` | ** Deprecated ** Jaeger host address. | `string` | `http://localhost:14268/api/traces` | **NO**   |
+| ``Host``       | Tracer host address.                  | `string` | ` `                                 | **NO**   |
 
 
 ## 2. Load data
