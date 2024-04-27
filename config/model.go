@@ -49,7 +49,8 @@ type Token struct {
 // Tracer holds jaeger tracer toml attributes.
 type Tracer struct {
 	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
-	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty" xml:"jaeger_host"`
+	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty" xml:"jaeger_host"` // Deprecated: use Host instead
+	Host       string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
 }
 
 // Audit holds auditing config attributes.
