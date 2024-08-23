@@ -9,23 +9,32 @@ import (
 	"github.com/ribeirohugo/go_config/config"
 )
 
+const (
+	defaultInt = 0
+)
+
 // Load loads configurations from a given json file path.
 func Load() (config.Config, error) {
-	// Load defaults
-	rawServerPort := os.Getenv("SERVER_PORT")
-	serverPort, err := strconv.Atoi(rawServerPort)
+	serverPort, err := getOptionalNumber("SERVER_PORT", defaultInt)
 	if err != nil {
-		return config.Config{}, fmt.Errorf("invalid SERVER_PORT: %s", err.Error())
+		return config.Config{}, err
 	}
 	rawServerAllowedOrigins := os.Getenv("SERVER_ALLOWED_ORIGINS")
 	var serverAllowedOrigins []string
 	if rawServerAllowedOrigins != "" {
 		serverAllowedOrigins = strings.Split(rawServerAllowedOrigins, ",")
 	}
-	rawTokenAge := os.Getenv("TOKEN_AGE")
-	tokenAge, err := strconv.Atoi(rawTokenAge)
+	tokenAge, err := getOptionalNumber("TOKEN_AGE", config.DefaultSessionMaxAge)
 	if err != nil {
-		return config.Config{}, fmt.Errorf("invalid TOKEN_AGE: %s", err.Error())
+		return config.Config{}, err
+	}
+	tracerEnabled, err := getBool("TRACER_ENABLED")
+	if err != nil {
+		return config.Config{}, err
+	}
+	tracerJaegerHost := os.Getenv("TRACER_JAEGER_HOST")
+	if tracerJaegerHost == "" {
+		tracerJaegerHost = config.DefaultJaegerHost
 	}
 
 	// Load Defaults
@@ -33,7 +42,7 @@ func Load() (config.Config, error) {
 	if mongoDBMigrationsPath == "" {
 		mongoDBMigrationsPath = config.DefaultMigrationsMongo
 	}
-	mongoDBPort, err := getNumber("MONGODB_PORT")
+	mongoDBPort, err := getOptionalNumber("MONGODB_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -41,7 +50,7 @@ func Load() (config.Config, error) {
 	if mySQLMigrationsPath == "" {
 		mySQLMigrationsPath = config.DefaultMigrationsMysql
 	}
-	mySQLPort, err := getNumber("MYSQL_PORT")
+	mySQLPort, err := getOptionalNumber("MYSQL_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -49,7 +58,7 @@ func Load() (config.Config, error) {
 	if postgresMigrationsPath == "" {
 		postgresMigrationsPath = config.DefaultMigrationsPostgres
 	}
-	postgresPort, err := getNumber("POSTGRES_PORT")
+	postgresPort, err := getOptionalNumber("POSTGRES_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -89,6 +98,11 @@ func Load() (config.Config, error) {
 			Db:             os.Getenv("POSTGRES_DATABASE"),
 			MigrationsPath: postgresMigrationsPath,
 		},
+		Tracer: config.Tracer{
+			Enabled:    tracerEnabled,
+			Host:       os.Getenv("TRACER_HOST"),
+			JaegerHost: tracerJaegerHost,
+		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
 	}
@@ -102,4 +116,27 @@ func getNumber(key string) (int, error) {
 		return 0, fmt.Errorf("invalid %s: %s", key, err.Error())
 	}
 	return intValue, nil
+}
+
+func getOptionalNumber(key string, defaultVal int) (int, error) {
+	rawIntValue := os.Getenv(key)
+	if rawIntValue == "" {
+		return defaultVal, nil
+	}
+	intValue, err := strconv.Atoi(rawIntValue)
+	if err != nil {
+		return 0, fmt.Errorf("invalid %s int value: %s", key, err.Error())
+	}
+	return intValue, nil
+}
+
+func getBool(key string) (bool, error) {
+	rawBoolValue := os.Getenv(key)
+	switch rawBoolValue {
+	case "1", "true", "TRUE", "True":
+		return true, nil
+	case "0", "false", "FALSE", "False", "":
+		return false, nil
+	}
+	return false, fmt.Errorf("invalid %s bool value: %s", key, rawBoolValue)
 }
