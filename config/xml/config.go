@@ -28,12 +28,15 @@ func Load(filePath string) (config.Config, error) {
 func LoadContent(content []byte) (config.Config, error) {
 	cfg := config.Config{
 		MySql: config.Database{
+			Port:           config.DefaultMySqlPort,
 			MigrationsPath: config.DefaultMigrationsMysql,
 		},
 		MongoDb: config.Database{
+			Port:           config.DefaultMongoPort,
 			MigrationsPath: config.DefaultMigrationsMongo,
 		},
 		Postgres: config.Database{
+			Port:           config.DefaultPostgresPort,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
 		Token: config.Token{
