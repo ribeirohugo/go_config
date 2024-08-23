@@ -73,7 +73,33 @@ First you need to get dependency `go_config` dependency by calling `go get`, wit
 go get github.com/ribeirohugo/go_config@latest
 ``
 
-### 2.1. Toml
+### 2.1. Environment
+
+Then, data can be loaded by calling `Load` method.
+It loads config variables from environment.
+
+```
+os.SetVar("SERVER_HOST", "localhost")
+
+cfg, err := toml.Load()
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+Variables and subvariables uses the following logic:
+
+```
+ENVIRONMENT = "TEST"
+
+SERVER_HOST = "localhost"
+
+MONGODB_USER = "username"
+```
+
+It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
+
+### 2.2. Toml
 
 Then, data can be loaded by calling `Load` method.
 It supports a `config.toml` file properly fulfilled.
@@ -87,7 +113,7 @@ if err != nil {
 
 It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
 
-### 2.2. YAML
+### 2.3. YAML
 
 Then, data can be loaded by calling `Load` method, with a `config.yaml` file properly fulfilled.
 
@@ -100,7 +126,7 @@ if err != nil {
 
 It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
 
-### 2.3. JSON
+### 2.4. JSON
 
 Then, data can be loaded by calling `Load` method, with a `config.json` file properly fulfilled.
 
@@ -113,7 +139,7 @@ if err != nil {
 
 It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
 
-### 2.4. XML
+### 2.5. XML
 
 Then, data can be loaded by calling `Load` method, with a `config.json` file properly fulfilled.
 
