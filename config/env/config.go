@@ -24,7 +24,11 @@ func Load() (config.Config, error) {
 	if rawServerAllowedOrigins != "" {
 		serverAllowedOrigins = strings.Split(rawServerAllowedOrigins, ",")
 	}
-	tokenAge, err := getNumber("TOKEN_AGE", config.DefaultSessionMaxAge)
+	tokenAge, err := getNumber("TOKEN_MAX_AGE", config.DefaultSessionMaxAge)
+	if err != nil {
+		return config.Config{}, err
+	}
+	auditEnabled, err := getBool("AUDIT_ENABLED")
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -66,7 +70,7 @@ func Load() (config.Config, error) {
 	// Load env variables
 	cfg := config.Config{
 		Server: config.Server{
-			Host:           os.Getenv("HOST"),
+			Host:           os.Getenv("SERVER_HOST"),
 			Port:           serverPort,
 			AllowedOrigins: serverAllowedOrigins,
 		},
@@ -97,6 +101,10 @@ func Load() (config.Config, error) {
 			Password:       os.Getenv("POSTGRES_PASSWORD"),
 			Db:             os.Getenv("POSTGRES_DATABASE"),
 			MigrationsPath: postgresMigrationsPath,
+		},
+		Audit: config.Audit{
+			Enabled: auditEnabled,
+			Host:    os.Getenv("AUDIT_HOST"),
 		},
 		Tracer: config.Tracer{
 			Enabled:    tracerEnabled,

@@ -49,42 +49,154 @@ func TestGetNumber(t *testing.T) {
 }
 
 func TestLoad(t *testing.T) {
+	const (
+		environment = "dev"
+		service     = "safesystem"
+		serverHost  = "localhost"
+		serverPort  = 8080
+		database    = "database"
+		password    = "password"
+		username    = "username"
+		auditHost   = "audit.domain"
+		tracerHost  = "https://tracer.domain"
+	)
+	expectedCfg := config.Config{
+		Server: config.Server{
+			Host:           serverHost,
+			Port:           serverPort,
+			AllowedOrigins: []string{"http://localhost:8080"},
+		},
+		Token: config.Token{
+			MaxAge: 100,
+			Secret: "token",
+		},
+		MongoDb: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsMongo,
+		},
+		MySql: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsMysql,
+		},
+		Postgres: config.Database{
+			Host:           serverHost,
+			Port:           serverPort,
+			User:           username,
+			Password:       password,
+			Db:             database,
+			MigrationsPath: config.DefaultMigrationsPostgres,
+		},
+		Audit: config.Audit{
+			Enabled: true,
+			Host:    auditHost,
+		},
+		Tracer: config.Tracer{
+			Enabled:    true,
+			JaegerHost: tracerHost,
+			Host:       tracerHost,
+		},
+		Environment: environment,
+		Service:     service,
+	}
+
 	t.Run("with valid environment variables", func(t *testing.T) {
-		err := os.Setenv("SERVER_PORT", "8080")
+		err := os.Setenv("SERVER_HOST", serverHost)
 		require.NoError(t, err)
-		err = os.Setenv("SERVER_ALLOWED_ORIGINS", "http://example.com,http://another.com")
+		err = os.Setenv("SERVER_PORT", "8080")
 		require.NoError(t, err)
-		err = os.Setenv("TOKEN_AGE", "3600")
+		err = os.Setenv("SERVER_ALLOWED_ORIGINS", "http://localhost:8080")
 		require.NoError(t, err)
-		err = os.Setenv("MONGODB_PORT", "27017")
+		err = os.Setenv("TOKEN_MAX_AGE", "100")
 		require.NoError(t, err)
-		err = os.Setenv("MYSQL_PORT", "3306")
+		err = os.Setenv("TOKEN_SECRET", "token")
 		require.NoError(t, err)
-		err = os.Setenv("POSTGRES_PORT", "5432")
+		err = os.Setenv("MONGODB_HOST", serverHost)
+		require.NoError(t, err)
+		err = os.Setenv("MONGODB_PORT", "8080")
+		require.NoError(t, err)
+		err = os.Setenv("MONGODB_USER", username)
+		require.NoError(t, err)
+		err = os.Setenv("MONGODB_PASSWORD", password)
+		require.NoError(t, err)
+		err = os.Setenv("MONGODB_DATABASE", database)
+		require.NoError(t, err)
+		err = os.Setenv("MYSQL_HOST", serverHost)
+		require.NoError(t, err)
+		err = os.Setenv("MYSQL_PORT", "8080")
+		require.NoError(t, err)
+		err = os.Setenv("MYSQL_USER", username)
+		require.NoError(t, err)
+		err = os.Setenv("MYSQL_PASSWORD", password)
+		require.NoError(t, err)
+		err = os.Setenv("MYSQL_DATABASE", database)
+		require.NoError(t, err)
+		err = os.Setenv("POSTGRES_HOST", serverHost)
+		require.NoError(t, err)
+		err = os.Setenv("POSTGRES_PORT", "8080")
+		require.NoError(t, err)
+		err = os.Setenv("POSTGRES_USER", username)
+		require.NoError(t, err)
+		err = os.Setenv("POSTGRES_PASSWORD", password)
+		require.NoError(t, err)
+		err = os.Setenv("POSTGRES_DATABASE", database)
+		require.NoError(t, err)
+		err = os.Setenv("TRACER_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("TRACER_HOST", tracerHost)
+		require.NoError(t, err)
+		err = os.Setenv("TRACER_JAEGER_HOST", tracerHost)
+		require.NoError(t, err)
+		err = os.Setenv("AUDIT_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("AUDIT_HOST", auditHost)
+		require.NoError(t, err)
+		err = os.Setenv("SERVICE", service)
+		require.NoError(t, err)
+		err = os.Setenv("ENVIRONMENT", environment)
 		require.NoError(t, err)
 		defer func() {
 			unsetEnvVars(t,
+				"SERVER_HOST",
 				"SERVER_PORT",
 				"SERVER_ALLOWED_ORIGINS",
-				"TOKEN_AGE",
+				"TOKEN_MAX_AGE",
+				"TOKEN_SECRET",
+				"MONGODB_HOST",
 				"MONGODB_PORT",
+				"MONGODB_USER",
+				"MONGODB_PASSWORD",
+				"MONGODB_DATABASE",
+				"MYSQL_HOST",
 				"MYSQL_PORT",
+				"MYSQL_USER",
+				"MYSQL_PASSWORD",
+				"MYSQL_DATABASE",
+				"POSTGRES_HOST",
 				"POSTGRES_PORT",
+				"POSTGRES_USER",
+				"POSTGRES_PASSWORD",
+				"POSTGRES_DATABASE",
+				"TRACER_ENABLED",
+				"TRACER_HOST",
+				"TRACER_JAEGER_HOST",
+				"AUDIT_ENABLED",
+				"AUDIT_HOST",
+				"SERVICE",
+				"ENVIRONMENT",
 			)
 		}()
 
 		cfg, err := Load()
 		require.NoError(t, err)
-
-		assert.Equal(t, 8080, cfg.Server.Port)
-		assert.Equal(t, []string{"http://example.com", "http://another.com"}, cfg.Server.AllowedOrigins)
-		assert.Equal(t, 3600, cfg.Token.MaxAge)
-		assert.Equal(t, 27017, cfg.MongoDb.Port)
-		assert.Equal(t, 3306, cfg.MySql.Port)
-		assert.Equal(t, 5432, cfg.Postgres.Port)
-		assert.Equal(t, config.DefaultMigrationsMongo, cfg.MongoDb.MigrationsPath)
-		assert.Equal(t, config.DefaultMigrationsMysql, cfg.MySql.MigrationsPath)
-		assert.Equal(t, config.DefaultMigrationsPostgres, cfg.Postgres.MigrationsPath)
+		assert.Equal(t, expectedCfg, cfg)
 	})
 
 	t.Run("without optional fields", func(t *testing.T) {
@@ -109,19 +221,6 @@ func TestLoad(t *testing.T) {
 		cfg, err := Load()
 		require.NoError(t, err)
 		assert.Equal(t, expectedConfig, cfg)
-	})
-
-	t.Run("load with invalid SERVER_PORT", func(t *testing.T) {
-		// Set the environment variable
-		os.Setenv("SERVER_PORT", "invalid-port")
-
-		defer os.Unsetenv("SERVER_PORT")
-
-		// Call the function
-		_, err := Load()
-
-		// Assert the results
-		assert.Error(t, err)
 	})
 
 	t.Run("returns an error", func(t *testing.T) {
