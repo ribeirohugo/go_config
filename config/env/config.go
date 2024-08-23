@@ -46,7 +46,7 @@ func Load() (config.Config, error) {
 	if mongoDBMigrationsPath == "" {
 		mongoDBMigrationsPath = config.DefaultMigrationsMongo
 	}
-	mongoDBPort, err := getNumber("MONGODB_PORT", defaultInt)
+	mongoDBPort, err := getNumber("MONGODB_PORT", config.DefaultMongoPort)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -54,7 +54,7 @@ func Load() (config.Config, error) {
 	if mySQLMigrationsPath == "" {
 		mySQLMigrationsPath = config.DefaultMigrationsMysql
 	}
-	mySQLPort, err := getNumber("MYSQL_PORT", defaultInt)
+	mySQLPort, err := getNumber("MYSQL_PORT", config.DefaultMySqlPort)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -62,7 +62,7 @@ func Load() (config.Config, error) {
 	if postgresMigrationsPath == "" {
 		postgresMigrationsPath = config.DefaultMigrationsPostgres
 	}
-	postgresPort, err := getNumber("POSTGRES_PORT", defaultInt)
+	postgresPort, err := getNumber("POSTGRES_PORT", config.DefaultPostgresPort)
 	if err != nil {
 		return config.Config{}, err
 	}

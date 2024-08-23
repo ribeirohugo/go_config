@@ -146,12 +146,15 @@ func TestLoad(t *testing.T) {
 					Local: xmlLocalName,
 				},
 				MySql: config.Database{
+					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
+					Port:           config.DefaultMongoPort,
 					MigrationsPath: config.DefaultMigrationsMongo,
 				},
 				Postgres: config.Database{
+					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
 				Tracer: config.Tracer{
@@ -267,12 +270,15 @@ func TestLoadContent(t *testing.T) {
 					Local: xmlLocalName,
 				},
 				MySql: config.Database{
+					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
+					Port:           config.DefaultMongoPort,
 					MigrationsPath: config.DefaultMigrationsMongo,
 				},
 				Postgres: config.Database{
+					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
 				Tracer: config.Tracer{

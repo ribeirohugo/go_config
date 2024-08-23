@@ -38,8 +38,10 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``host``            | Database host.                                      | `string` | ` `                                          | **YES**  |
 | ``migrations_path`` | Migrations directory path.                          | `string` | `file://migrations/<mongo><mysql><postgres>` | **NO**   |
 | ``password``        | Database password.                                  | `string` | ` `                                          | **YES**  |
-| ``port``            | Database port.                                      | `int`    | ` `                                          | **YES**  |
+| ``port``            | Database port.                                      | `int`    | `3306`, `5432`, `27017` <sup>(1)</sup>       | **YES**  |
 | ``user``            | Database user with needed privileges over database. | `string` | ` `                                          | **YES**  |
+
+> <sup>(1)</sup> `3306` for MySQL, `5432` for Postgres and `27017` for MongoDB. 
 
 ### 1.3. Token type
 
@@ -105,7 +107,7 @@ Then, data can be loaded by calling `Load` method.
 It supports a `config.toml` file properly fulfilled.
 
 ```
-cfg, err := toml.Load(configFile)
+cfg, err := env.Load(configFile)
 if err != nil {
     log.Fatal(err)
 }

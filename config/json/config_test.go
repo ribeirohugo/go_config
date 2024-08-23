@@ -135,12 +135,15 @@ func TestLoad(t *testing.T) {
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
 				MySql: config.Database{
+					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
+					Port:           config.DefaultMongoPort,
 					MigrationsPath: config.DefaultMigrationsMongo,
 				},
 				Postgres: config.Database{
+					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
 				Audit: config.Audit{
@@ -253,12 +256,15 @@ func TestLoadContent(t *testing.T) {
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
 				MySql: config.Database{
+					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
+					Port:           config.DefaultMongoPort,
 					MigrationsPath: config.DefaultMigrationsMongo,
 				},
 				Postgres: config.Database{
+					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
 				Tracer: config.Tracer{
