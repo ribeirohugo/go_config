@@ -33,28 +33,25 @@ func Load() (config.Config, error) {
 	if mongoDBMigrationsPath == "" {
 		mongoDBMigrationsPath = config.DefaultMigrationsMongo
 	}
-	rawMongoDBPort := os.Getenv("MONGODB_PORT")
-	mongoDBPort, err := strconv.Atoi(rawMongoDBPort)
+	mongoDBPort, err := getNumber("MONGODB_PORT")
 	if err != nil {
-		return config.Config{}, fmt.Errorf("invalid MONGODB_PORT: %s", err.Error())
+		return config.Config{}, err
 	}
 	mySQLMigrationsPath := os.Getenv("MYSQL_MIGRATIONS_PATH")
 	if mySQLMigrationsPath == "" {
 		mySQLMigrationsPath = config.DefaultMigrationsMysql
 	}
-	rawMySQLPort := os.Getenv("MYSQL_PORT")
-	mySQLPort, err := strconv.Atoi(rawMySQLPort)
+	mySQLPort, err := getNumber("MYSQL_PORT")
 	if err != nil {
-		return config.Config{}, fmt.Errorf("invalid MYSQL_PORT: %s", err.Error())
+		return config.Config{}, err
 	}
 	postgresMigrationsPath := os.Getenv("POSTGRES_MIGRATIONS_PATH")
 	if postgresMigrationsPath == "" {
 		postgresMigrationsPath = config.DefaultMigrationsPostgres
 	}
-	rawPostgresPort := os.Getenv("POSTGRES_PORT")
-	postgresPort, err := strconv.Atoi(rawPostgresPort)
+	postgresPort, err := getNumber("POSTGRES_PORT")
 	if err != nil {
-		return config.Config{}, fmt.Errorf("invalid POSTGRES_PORT: %s", err.Error())
+		return config.Config{}, err
 	}
 
 	// Load env variables
@@ -96,4 +93,13 @@ func Load() (config.Config, error) {
 		Service:     os.Getenv("SERVICE"),
 	}
 	return cfg, nil
+}
+
+func getNumber(key string) (int, error) {
+	rawIntValue := os.Getenv(key)
+	intValue, err := strconv.Atoi(rawIntValue)
+	if err != nil {
+		return 0, fmt.Errorf("invalid %s: %s", key, err.Error())
+	}
+	return intValue, nil
 }
