@@ -105,7 +105,7 @@ Then, data can be loaded by calling `Load` method.
 It supports a `config.toml` file properly fulfilled.
 
 ```
-cfg, err := toml.Load(configFile)
+cfg, err := env.Load(configFile)
 if err != nil {
     log.Fatal(err)
 }
