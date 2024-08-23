@@ -15,7 +15,7 @@ const (
 
 // Load loads configurations from a given json file path.
 func Load() (config.Config, error) {
-	serverPort, err := getOptionalNumber("SERVER_PORT", defaultInt)
+	serverPort, err := getNumber("SERVER_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -24,7 +24,7 @@ func Load() (config.Config, error) {
 	if rawServerAllowedOrigins != "" {
 		serverAllowedOrigins = strings.Split(rawServerAllowedOrigins, ",")
 	}
-	tokenAge, err := getOptionalNumber("TOKEN_AGE", config.DefaultSessionMaxAge)
+	tokenAge, err := getNumber("TOKEN_AGE", config.DefaultSessionMaxAge)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -42,7 +42,7 @@ func Load() (config.Config, error) {
 	if mongoDBMigrationsPath == "" {
 		mongoDBMigrationsPath = config.DefaultMigrationsMongo
 	}
-	mongoDBPort, err := getOptionalNumber("MONGODB_PORT", defaultInt)
+	mongoDBPort, err := getNumber("MONGODB_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -50,7 +50,7 @@ func Load() (config.Config, error) {
 	if mySQLMigrationsPath == "" {
 		mySQLMigrationsPath = config.DefaultMigrationsMysql
 	}
-	mySQLPort, err := getOptionalNumber("MYSQL_PORT", defaultInt)
+	mySQLPort, err := getNumber("MYSQL_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -58,7 +58,7 @@ func Load() (config.Config, error) {
 	if postgresMigrationsPath == "" {
 		postgresMigrationsPath = config.DefaultMigrationsPostgres
 	}
-	postgresPort, err := getOptionalNumber("POSTGRES_PORT", defaultInt)
+	postgresPort, err := getNumber("POSTGRES_PORT", defaultInt)
 	if err != nil {
 		return config.Config{}, err
 	}
@@ -109,23 +109,14 @@ func Load() (config.Config, error) {
 	return cfg, nil
 }
 
-func getNumber(key string) (int, error) {
-	rawIntValue := os.Getenv(key)
-	intValue, err := strconv.Atoi(rawIntValue)
-	if err != nil {
-		return 0, fmt.Errorf("invalid %s: %s", key, err.Error())
-	}
-	return intValue, nil
-}
-
-func getOptionalNumber(key string, defaultVal int) (int, error) {
+func getNumber(key string, defaultVal int) (int, error) {
 	rawIntValue := os.Getenv(key)
 	if rawIntValue == "" {
 		return defaultVal, nil
 	}
 	intValue, err := strconv.Atoi(rawIntValue)
 	if err != nil {
-		return 0, fmt.Errorf("invalid %s int value: %s", key, err.Error())
+		return defaultInt, fmt.Errorf("invalid %s int value: %s", key, err.Error())
 	}
 	return intValue, nil
 }

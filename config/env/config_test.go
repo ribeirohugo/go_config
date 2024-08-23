@@ -19,8 +19,7 @@ func TestGetNumber(t *testing.T) {
 			require.NoError(t, err)
 		}()
 
-		result, err := getNumber("TEST_KEY")
-
+		result, err := getNumber("TEST_KEY", defaultInt)
 		assert.NoError(t, err)
 		assert.Equal(t, 42, result)
 	})
@@ -32,10 +31,10 @@ func TestGetNumber(t *testing.T) {
 			err = os.Unsetenv("TEST_KEY")
 		}()
 
-		result, err := getNumber("TEST_KEY")
+		result, err := getNumber("TEST_KEY", defaultInt)
 
 		assert.Error(t, err)
-		assert.Equal(t, 0, result)
+		assert.Equal(t, defaultInt, result)
 		assert.Contains(t, err.Error(), "invalid TEST_KEY")
 	})
 
@@ -43,11 +42,9 @@ func TestGetNumber(t *testing.T) {
 		err := os.Unsetenv("TEST_KEY")
 		require.NoError(t, err)
 
-		result, err := getNumber("TEST_KEY")
-
-		assert.Error(t, err)
-		assert.Equal(t, 0, result)
-		assert.Contains(t, err.Error(), "invalid TEST_KEY")
+		result, err := getNumber("TEST_KEY", defaultInt)
+		require.NoError(t, err)
+		assert.Equal(t, defaultInt, result)
 	})
 }
 
