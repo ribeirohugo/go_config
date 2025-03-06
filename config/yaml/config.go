@@ -46,8 +46,8 @@ func LoadContent(content []byte) (config.Config, error) {
 		Loki: config.ExternalService{
 			Host: config.DefaultLokiHost,
 		},
-		Tracer: config.Tracer{
-			JaegerHost: config.DefaultJaegerHost,
+		Jaeger: config.ExternalService{
+			Host: config.DefaultJaegerHost,
 		},
 	}
 
