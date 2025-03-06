@@ -10,13 +10,13 @@ Check out the following tables to know all ``Config`` parameters detailed.
 
 | Parameter       | Description                           | Type              | Default | Required |
 |:----------------|:--------------------------------------|:------------------|:--------|:---------|
-| ``environment`` | Website environment.                  | `string`          | ` `     | **YES**  |
-| ``service``     | Website service identifier as string. | `string`          | ` `     | **YES**  |
+| ``environment`` | Website environment.                  | `string`          | ` `     | **NO**   |
+| ``service``     | Website service identifier as string. | `string`          | ` `     | **NO**   |
 | ``[server]``    | Http server config data.              | `Server`          | ` `     | **YES**  |
-| ``[token]``     | Token data config data.               | `Token`           | ` `     | **YES**  |
-| ``[mongodb]``   | Postgres database config data.        | `Database`        | ` `     | **YES**  |
-| ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **YES**  |
-| ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **YES**  |
+| ``[token]``     | Token data config data.               | `Token`           | ` `     | **NO**   |
+| ``[mongodb]``   | Postgres database config data.        | `Database`        | ` `     | **NO**   |
+| ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **NO**   |
+| ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **NO**   |
 | ``[audit]``     | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
 | ``[jaeger]``    | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
 | ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
