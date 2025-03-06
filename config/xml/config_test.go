@@ -47,17 +47,18 @@ const configContent = `<config>
     <audit>
         <enabled>true</enabled>
         <host>audit.domain</host>
+        <token>audit.token</token>
     </audit>
     <loki>
         <enabled>true</enabled>
         <host>loki.domain</host>
         <token>loki.token</token>
     </loki>
-    <tracer>
+    <jaeger>
         <enabled>true</enabled>
-        <jaeger_host>https://tracer.domain</jaeger_host>
-        <host>https://tracer.domain</host>
-    </tracer>
+        <host>jaeger.domain</host>
+        <token>jaeger.token</token>
+    </jaeger>
 </config>
 `
 
@@ -82,9 +83,11 @@ func TestLoad(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		auditToken   = "audit.token"
 		lokiHost     = "loki.domain"
 		lokiToken    = "loki.token"
-		tracerHost   = "https://tracer.domain"
+		jaegerHost   = "jaeger.domain"
+		jaegerToken  = "jaeger.token"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -123,19 +126,20 @@ func TestLoad(t *testing.T) {
 			Db:             database,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
-		Audit: config.Audit{
+		Audit: config.ExternalService{
 			Enabled: true,
 			Host:    auditHost,
+			Token:   auditToken,
 		},
 		Loki: config.ExternalService{
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
 		},
-		Tracer: config.Tracer{
-			Enabled:    true,
-			JaegerHost: tracerHost,
-			Host:       tracerHost,
+		Jaeger: config.ExternalService{
+			Enabled: true,
+			Host:    jaegerHost,
+			Token:   jaegerToken,
 		},
 		Environment: environment,
 		Service:     service,
@@ -172,8 +176,8 @@ func TestLoad(t *testing.T) {
 				Loki: config.ExternalService{
 					Host: config.DefaultLokiHost,
 				},
-				Tracer: config.Tracer{
-					JaegerHost: config.DefaultJaegerHost,
+				Jaeger: config.ExternalService{
+					Host: config.DefaultJaegerHost,
 				},
 				Token: config.Token{
 					MaxAge: config.DefaultSessionMaxAge,
@@ -220,9 +224,11 @@ func TestLoadContent(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		auditToken   = "audit.token"
 		lokiHost     = "loki.domain"
 		lokiToken    = "loki.token"
-		tracerHost   = "https://tracer.domain"
+		jaegerHost   = "jaeger.domain"
+		jaegerToken  = "jaeger.token"
 	)
 	configTest := config.Config{
 		XMLName: xml.Name{
@@ -261,19 +267,20 @@ func TestLoadContent(t *testing.T) {
 			Db:             database,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
-		Audit: config.Audit{
+		Audit: config.ExternalService{
 			Enabled: true,
 			Host:    auditHost,
+			Token:   auditToken,
 		},
 		Loki: config.ExternalService{
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
 		},
-		Tracer: config.Tracer{
-			Enabled:    true,
-			JaegerHost: tracerHost,
-			Host:       tracerHost,
+		Jaeger: config.ExternalService{
+			Enabled: true,
+			Host:    jaegerHost,
+			Token:   jaegerToken,
 		},
 		Environment: environment,
 		Service:     service,
@@ -306,8 +313,8 @@ func TestLoadContent(t *testing.T) {
 				Loki: config.ExternalService{
 					Host: config.DefaultLokiHost,
 				},
-				Tracer: config.Tracer{
-					JaegerHost: config.DefaultJaegerHost,
+				Jaeger: config.ExternalService{
+					Host: config.DefaultJaegerHost,
 				},
 				Token: config.Token{
 					MaxAge: config.DefaultSessionMaxAge,
