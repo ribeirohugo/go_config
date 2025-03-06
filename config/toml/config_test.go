@@ -50,7 +50,7 @@ host = "audit.domain"
 [loki]
 enabled = true
 host = "loki.domain"
-token = "token.domain"
+token = "loki.token"
 
 [tracer]
 enabled = true
@@ -75,7 +75,7 @@ func TestLoad(t *testing.T) {
 		username    = "username"
 		auditHost   = "audit.domain"
 		lokiHost    = "loki.domain"
-		lokiToken   = "token.domain"
+		lokiToken   = "loki.token"
 		tracerHost  = "https://tracer.domain"
 	)
 	configTest := config.Config{
@@ -205,6 +205,8 @@ func TestLoadContent(t *testing.T) {
 		password    = "password"
 		username    = "username"
 		auditHost   = "audit.domain"
+		lokiHost    = "loki.domain"
+		lokiToken   = "loki.token"
 		tracerHost  = "https://tracer.domain"
 	)
 	configTest := config.Config{
@@ -245,6 +247,11 @@ func TestLoadContent(t *testing.T) {
 			Enabled: true,
 			Host:    auditHost,
 		},
+		Loki: config.ExternalService{
+			Enabled: true,
+			Host:    lokiHost,
+			Token:   lokiToken,
+		},
 		Tracer: config.Tracer{
 			Enabled:    true,
 			JaegerHost: tracerHost,
@@ -274,6 +281,9 @@ func TestLoadContent(t *testing.T) {
 				Postgres: config.Database{
 					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
+				},
+				Loki: config.ExternalService{
+					Host: config.DefaultLokiHost,
 				},
 				Tracer: config.Tracer{
 					JaegerHost: config.DefaultJaegerHost,
