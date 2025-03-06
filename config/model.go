@@ -14,8 +14,9 @@ type Config struct {
 	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
-	Audit  Audit  `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
-	Tracer Tracer `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
+	Audit  Audit           `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
+	Loki   ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
+	Tracer Tracer          `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
@@ -57,6 +58,13 @@ type Tracer struct {
 type Audit struct {
 	Enabled bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
 	Host    string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
+}
+
+// ExternalService holds essential external service configuration data.
+type ExternalService struct {
+	Enabled bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
+	Host    string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
+	Token   string `toml:"token" yaml:"token" json:"token,omitempty" xml:"token"`
 }
 
 // GetAddress returns website address.
