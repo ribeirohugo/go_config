@@ -58,6 +58,8 @@ func TestLoad(t *testing.T) {
 		password    = "password"
 		username    = "username"
 		auditHost   = "audit.domain"
+		lokiHost    = "loki.domain"
+		lokiToken   = "loki.token"
 		tracerHost  = "https://tracer.domain"
 	)
 	expectedCfg := config.Config{
@@ -97,6 +99,11 @@ func TestLoad(t *testing.T) {
 		Audit: config.Audit{
 			Enabled: true,
 			Host:    auditHost,
+		},
+		Loki: config.ExternalService{
+			Enabled: true,
+			Host:    lokiHost,
+			Token:   lokiToken,
 		},
 		Tracer: config.Tracer{
 			Enabled:    true,
@@ -148,15 +155,21 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("POSTGRES_DATABASE", database)
 		require.NoError(t, err)
+		err = os.Setenv("AUDIT_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("AUDIT_HOST", auditHost)
+		require.NoError(t, err)
+		err = os.Setenv("LOKI_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("LOKI_HOST", lokiHost)
+		require.NoError(t, err)
+		err = os.Setenv("LOKI_TOKEN", lokiToken)
+		require.NoError(t, err)
 		err = os.Setenv("TRACER_ENABLED", "TRUE")
 		require.NoError(t, err)
 		err = os.Setenv("TRACER_HOST", tracerHost)
 		require.NoError(t, err)
 		err = os.Setenv("TRACER_JAEGER_HOST", tracerHost)
-		require.NoError(t, err)
-		err = os.Setenv("AUDIT_ENABLED", "TRUE")
-		require.NoError(t, err)
-		err = os.Setenv("AUDIT_HOST", auditHost)
 		require.NoError(t, err)
 		err = os.Setenv("SERVICE", service)
 		require.NoError(t, err)
@@ -184,11 +197,14 @@ func TestLoad(t *testing.T) {
 				"POSTGRES_USER",
 				"POSTGRES_PASSWORD",
 				"POSTGRES_DATABASE",
+				"AUDIT_ENABLED",
+				"AUDIT_HOST",
+				"LOKI_ENABLED",
+				"LOKI_HOST",
+				"LOKI_TOKEN",
 				"TRACER_ENABLED",
 				"TRACER_HOST",
 				"TRACER_JAEGER_HOST",
-				"AUDIT_ENABLED",
-				"AUDIT_HOST",
 				"SERVICE",
 				"ENVIRONMENT",
 			)
@@ -212,6 +228,9 @@ func TestLoad(t *testing.T) {
 			Postgres: config.Database{
 				Port:           config.DefaultPostgresPort,
 				MigrationsPath: config.DefaultMigrationsPostgres,
+			},
+			Loki: config.ExternalService{
+				Host: config.DefaultLokiHost,
 			},
 			Tracer: config.Tracer{
 				JaegerHost: config.DefaultJaegerHost,
