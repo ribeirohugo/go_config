@@ -79,6 +79,9 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 
 ### 1.6.1. External Host Default Values
 
+For `ExternalService` main config, the `Host` default value depends on the main service,
+and those values are described in the next table.
+
 | Service  | Default Host Value                       |
 |:---------|:-----------------------------------------|
 | ``Loki`` | `http://localhost:3100/loki/api/v1/push` |
