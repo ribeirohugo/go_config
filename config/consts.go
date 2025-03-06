@@ -9,4 +9,5 @@ const (
 	DefaultPostgresPort       = 5432
 	DefaultSessionMaxAge      = 86400 // 24 hours
 	DefaultJaegerHost         = "http://localhost:14268/api/traces"
+	DefaultLokiHost           = "http://localhost:3100/loki/api/v1/push"
 )

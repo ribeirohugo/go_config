@@ -39,6 +39,9 @@ func LoadContent(content []byte) (config.Config, error) {
 			Port:           config.DefaultPostgresPort,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
+		Loki: config.ExternalService{
+			Host: config.DefaultLokiHost,
+		},
 		Token: config.Token{
 			MaxAge: config.DefaultSessionMaxAge,
 		},

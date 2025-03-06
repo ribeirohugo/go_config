@@ -32,6 +32,14 @@ func Load() (config.Config, error) {
 	if err != nil {
 		return config.Config{}, err
 	}
+	lokiEnabled, err := getBool("LOKI_ENABLED")
+	if err != nil {
+		return config.Config{}, err
+	}
+	lokiHost := os.Getenv("LOKI_HOST")
+	if lokiHost == "" {
+		lokiHost = config.DefaultLokiHost
+	}
 	tracerEnabled, err := getBool("TRACER_ENABLED")
 	if err != nil {
 		return config.Config{}, err
@@ -105,6 +113,11 @@ func Load() (config.Config, error) {
 		Audit: config.Audit{
 			Enabled: auditEnabled,
 			Host:    os.Getenv("AUDIT_HOST"),
+		},
+		Loki: config.ExternalService{
+			Enabled: lokiEnabled,
+			Host:    lokiHost,
+			Token:   os.Getenv("LOKI_TOKEN"),
 		},
 		Tracer: config.Tracer{
 			Enabled:    tracerEnabled,
