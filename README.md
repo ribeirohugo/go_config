@@ -18,7 +18,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **YES**  |
 | ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **YES**  |
 | ``[audit]``     | Auditing options config data.         | `Audit`           | ` `     | **YES**  |
-| ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **YES**  |
+| ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
 | ``[tracer]``    | Tracing options config data.          | `Tracer`          | ` `     | **YES**  |
 
 ### 1.1. Server type
