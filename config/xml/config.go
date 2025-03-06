@@ -45,8 +45,8 @@ func LoadContent(content []byte) (config.Config, error) {
 		Token: config.Token{
 			MaxAge: config.DefaultSessionMaxAge,
 		},
-		Tracer: config.Tracer{
-			JaegerHost: config.DefaultJaegerHost,
+		Jaeger: config.ExternalService{
+			Host: config.DefaultJaegerHost,
 		},
 	}
 

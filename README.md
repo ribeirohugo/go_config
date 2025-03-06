@@ -10,16 +10,16 @@ Check out the following tables to know all ``Config`` parameters detailed.
 
 | Parameter       | Description                           | Type              | Default | Required |
 |:----------------|:--------------------------------------|:------------------|:--------|:---------|
-| ``environment`` | Website environment.                  | `string`          | ` `     | **YES**  |
-| ``service``     | Website service identifier as string. | `string`          | ` `     | **YES**  |
+| ``environment`` | Website environment.                  | `string`          | ` `     | **NO**   |
+| ``service``     | Website service identifier as string. | `string`          | ` `     | **NO**   |
 | ``[server]``    | Http server config data.              | `Server`          | ` `     | **YES**  |
-| ``[token]``     | Token data config data.               | `Token`           | ` `     | **YES**  |
-| ``[mongodb]``   | Postgres database config data.        | `Database`        | ` `     | **YES**  |
-| ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **YES**  |
-| ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **YES**  |
-| ``[audit]``     | Auditing options config data.         | `Audit`           | ` `     | **YES**  |
+| ``[token]``     | Token data config data.               | `Token`           | ` `     | **NO**   |
+| ``[mongodb]``   | Postgres database config data.        | `Database`        | ` `     | **NO**   |
+| ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **NO**   |
+| ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **NO**   |
+| ``[audit]``     | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
+| ``[jaeger]``    | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
 | ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
-| ``[tracer]``    | Tracing options config data.          | `Tracer`          | ` `     | **YES**  |
 
 ### 1.1. Server type
 
@@ -51,23 +51,7 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``secret``     | Website token secret string.              | `string` | ` `      | **YES**  |
 | ``max_age``    | Maximum duration of a token (in seconds). | `int`    | `86400`  | **NO**   |
 
-### 1.4. Audit type
-
-| Parameter  | Description                       | Type     | Default | Required |
-|:-----------|:----------------------------------|:---------|:--------|:---------|
-| ``Enable`` | Enable flag to activate auditing. | `bool`   | `FALSE` | **NO**   |
-| ``Host``   | Auditing server host address.     | `string` | ` `     | **NO**   |
-
-
-### 1.5. Tracer type
-
-| Parameter      | Description                           | Type     | Default                             | Required |
-|:---------------|:--------------------------------------|:---------|:------------------------------------|:---------|
-| ``Enable``     | Enable flag to activate tracing.      | `bool`   | `FALSE`                             | **NO**   |
-| ``JaegerHost`` | ** Deprecated ** Jaeger host address. | `string` | `http://localhost:14268/api/traces` | **NO**   |
-| ``Host``       | Tracer host address.                  | `string` | ` `                                 | **NO**   |
-
-### 1.6. External Service type
+### 1.4. External Service type
 
 | Parameter  | Description                      | Type     | Default            | Required |
 |:-----------|:---------------------------------|:---------|:-------------------|:---------|
@@ -77,14 +61,16 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 
 > <sup>(2)</sup> Host default values are specified in `External Host Default Values` table.
 
-### 1.6.1. External Host Default Values
+### 1.4.1. External Host Default Values
 
 For `ExternalService` main config, the `Host` default value depends on the main service,
 and those values are described in the next table.
 
-| Service  | Default Host Value                       |
-|:---------|:-----------------------------------------|
-| ``Loki`` | `http://localhost:3100/loki/api/v1/push` |
+| Service    | Default Host Value                       |
+|:-----------|:-----------------------------------------|
+| ``Audit``  | ` `                                      |
+| ``Jaeger`` | `http://localhost:14268/api/traces`      |
+| ``Loki``   | `http://localhost:3100/loki/api/v1/push` |
 
 ## 2. Load data
 

@@ -58,9 +58,11 @@ func TestLoad(t *testing.T) {
 		password    = "password"
 		username    = "username"
 		auditHost   = "audit.domain"
+		auditToken  = "audit.token"
 		lokiHost    = "loki.domain"
 		lokiToken   = "loki.token"
-		tracerHost  = "https://tracer.domain"
+		jaegerHost  = "jaeger.domain"
+		jaegerToken = "loki.token"
 	)
 	expectedCfg := config.Config{
 		Server: config.Server{
@@ -96,19 +98,20 @@ func TestLoad(t *testing.T) {
 			Db:             database,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
-		Audit: config.Audit{
+		Audit: config.ExternalService{
 			Enabled: true,
 			Host:    auditHost,
+			Token:   auditToken,
 		},
 		Loki: config.ExternalService{
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
 		},
-		Tracer: config.Tracer{
-			Enabled:    true,
-			JaegerHost: tracerHost,
-			Host:       tracerHost,
+		Jaeger: config.ExternalService{
+			Enabled: true,
+			Host:    jaegerHost,
+			Token:   jaegerToken,
 		},
 		Environment: environment,
 		Service:     service,
@@ -159,17 +162,19 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("AUDIT_HOST", auditHost)
 		require.NoError(t, err)
+		err = os.Setenv("AUDIT_TOKEN", auditToken)
+		require.NoError(t, err)
 		err = os.Setenv("LOKI_ENABLED", "TRUE")
 		require.NoError(t, err)
 		err = os.Setenv("LOKI_HOST", lokiHost)
 		require.NoError(t, err)
 		err = os.Setenv("LOKI_TOKEN", lokiToken)
 		require.NoError(t, err)
-		err = os.Setenv("TRACER_ENABLED", "TRUE")
+		err = os.Setenv("JAEGER_ENABLED", "TRUE")
 		require.NoError(t, err)
-		err = os.Setenv("TRACER_HOST", tracerHost)
+		err = os.Setenv("JAEGER_HOST", jaegerHost)
 		require.NoError(t, err)
-		err = os.Setenv("TRACER_JAEGER_HOST", tracerHost)
+		err = os.Setenv("JAEGER_TOKEN", jaegerToken)
 		require.NoError(t, err)
 		err = os.Setenv("SERVICE", service)
 		require.NoError(t, err)
@@ -199,12 +204,13 @@ func TestLoad(t *testing.T) {
 				"POSTGRES_DATABASE",
 				"AUDIT_ENABLED",
 				"AUDIT_HOST",
+				"AUDIT_TOKEN",
 				"LOKI_ENABLED",
 				"LOKI_HOST",
 				"LOKI_TOKEN",
-				"TRACER_ENABLED",
-				"TRACER_HOST",
-				"TRACER_JAEGER_HOST",
+				"JAEGER_ENABLED",
+				"JAEGER_HOST",
+				"JAEGER_TOKEN",
 				"SERVICE",
 				"ENVIRONMENT",
 			)
@@ -232,8 +238,8 @@ func TestLoad(t *testing.T) {
 			Loki: config.ExternalService{
 				Host: config.DefaultLokiHost,
 			},
-			Tracer: config.Tracer{
-				JaegerHost: config.DefaultJaegerHost,
+			Jaeger: config.ExternalService{
+				Host: config.DefaultJaegerHost,
 			},
 			Token: config.Token{
 				MaxAge: config.DefaultSessionMaxAge,
@@ -257,10 +263,10 @@ func TestLoad(t *testing.T) {
 			assert.Error(t, err)
 		})
 		t.Run("due to invalid bool value", func(t *testing.T) {
-			err := os.Setenv("TRACER_ENABLED", "error")
+			err := os.Setenv("JAEGER_ENABLED", "error")
 			require.NoError(t, err)
 			defer func() {
-				err = os.Unsetenv("TRACER_ENABLED")
+				err = os.Unsetenv("JAEGER_ENABLED")
 				require.NoError(t, err)
 			}()
 			_, err = Load()

@@ -14,9 +14,9 @@ type Config struct {
 	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
-	Audit  Audit           `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
+	Audit  ExternalService `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
+	Jaeger ExternalService `toml:"jaeger" yaml:"jaeger" json:"jaeger,omitempty" xml:"jaeger"`
 	Loki   ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
-	Tracer Tracer          `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
@@ -45,19 +45,6 @@ type Server struct {
 type Token struct {
 	MaxAge int    `toml:"max_age" yaml:"max_age" json:"max_age,omitempty" xml:"max_age"`
 	Secret string `toml:"secret" yaml:"secret" json:"secret,omitempty" xml:"secret"`
-}
-
-// Tracer holds jaeger tracer toml attributes.
-type Tracer struct {
-	Enabled    bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
-	JaegerHost string `toml:"jaeger_host" yaml:"jaeger_host" json:"jaeger_host,omitempty" xml:"jaeger_host"` // Deprecated: use Host instead
-	Host       string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
-}
-
-// Audit holds auditing config attributes.
-type Audit struct {
-	Enabled bool   `toml:"enabled" yaml:"enabled" json:"enabled,omitempty" xml:"enabled"`
-	Host    string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
 }
 
 // ExternalService holds essential external service configuration data.
