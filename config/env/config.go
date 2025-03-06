@@ -40,13 +40,13 @@ func Load() (config.Config, error) {
 	if lokiHost == "" {
 		lokiHost = config.DefaultLokiHost
 	}
-	tracerEnabled, err := getBool("TRACER_ENABLED")
+	jaegerEnabled, err := getBool("JAEGER_ENABLED")
 	if err != nil {
 		return config.Config{}, err
 	}
-	tracerJaegerHost := os.Getenv("TRACER_JAEGER_HOST")
-	if tracerJaegerHost == "" {
-		tracerJaegerHost = config.DefaultJaegerHost
+	jaegerHost := os.Getenv("JAEGER_HOST")
+	if jaegerHost == "" {
+		jaegerHost = config.DefaultJaegerHost
 	}
 
 	// Load Defaults
@@ -110,19 +110,20 @@ func Load() (config.Config, error) {
 			Db:             os.Getenv("POSTGRES_DATABASE"),
 			MigrationsPath: postgresMigrationsPath,
 		},
-		Audit: config.Audit{
+		Audit: config.ExternalService{
 			Enabled: auditEnabled,
 			Host:    os.Getenv("AUDIT_HOST"),
+			Token:   os.Getenv("AUDIT_TOKEN"),
 		},
 		Loki: config.ExternalService{
 			Enabled: lokiEnabled,
 			Host:    lokiHost,
 			Token:   os.Getenv("LOKI_TOKEN"),
 		},
-		Tracer: config.Tracer{
-			Enabled:    tracerEnabled,
-			Host:       os.Getenv("TRACER_HOST"),
-			JaegerHost: tracerJaegerHost,
+		Jaeger: config.ExternalService{
+			Enabled: jaegerEnabled,
+			Host:    jaegerHost,
+			Token:   os.Getenv("LOKI_TOKEN"),
 		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
