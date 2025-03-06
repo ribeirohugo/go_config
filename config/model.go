@@ -15,7 +15,7 @@ type Config struct {
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
 	Audit  ExternalService `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
-	Jaeger ExternalService `toml:"tracer" yaml:"tracer" json:"tracer,omitempty" xml:"tracer"`
+	Jaeger ExternalService `toml:"jaeger" yaml:"jaeger" json:"jaeger,omitempty" xml:"jaeger"`
 	Loki   ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`

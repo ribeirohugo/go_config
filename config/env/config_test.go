@@ -61,7 +61,7 @@ func TestLoad(t *testing.T) {
 		auditToken  = "audit.token"
 		lokiHost    = "loki.domain"
 		lokiToken   = "loki.token"
-		jaegerHost  = "https://tracer.domain"
+		jaegerHost  = "jaeger.domain"
 		jaegerToken = "loki.token"
 	)
 	expectedCfg := config.Config{
