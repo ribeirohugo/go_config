@@ -48,6 +48,11 @@ const configContent = `<config>
         <enabled>true</enabled>
         <host>audit.domain</host>
     </audit>
+    <loki>
+        <enabled>true</enabled>
+        <host>loki.domain</host>
+        <token>loki.token</token>
+    </loki>
     <tracer>
         <enabled>true</enabled>
         <jaeger_host>https://tracer.domain</jaeger_host>
@@ -77,6 +82,8 @@ func TestLoad(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		lokiHost     = "loki.domain"
+		lokiToken    = "loki.token"
 		tracerHost   = "https://tracer.domain"
 	)
 	configTest := config.Config{
@@ -120,6 +127,11 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    auditHost,
 		},
+		Loki: config.ExternalService{
+			Enabled: true,
+			Host:    lokiHost,
+			Token:   lokiToken,
+		},
 		Tracer: config.Tracer{
 			Enabled:    true,
 			JaegerHost: tracerHost,
@@ -156,6 +168,9 @@ func TestLoad(t *testing.T) {
 				Postgres: config.Database{
 					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
+				},
+				Loki: config.ExternalService{
+					Host: config.DefaultLokiHost,
 				},
 				Tracer: config.Tracer{
 					JaegerHost: config.DefaultJaegerHost,
@@ -205,6 +220,8 @@ func TestLoadContent(t *testing.T) {
 		username     = "username"
 		xmlLocalName = "config"
 		auditHost    = "audit.domain"
+		lokiHost     = "loki.domain"
+		lokiToken    = "loki.token"
 		tracerHost   = "https://tracer.domain"
 	)
 	configTest := config.Config{
@@ -248,6 +265,11 @@ func TestLoadContent(t *testing.T) {
 			Enabled: true,
 			Host:    auditHost,
 		},
+		Loki: config.ExternalService{
+			Enabled: true,
+			Host:    lokiHost,
+			Token:   lokiToken,
+		},
 		Tracer: config.Tracer{
 			Enabled:    true,
 			JaegerHost: tracerHost,
@@ -280,6 +302,9 @@ func TestLoadContent(t *testing.T) {
 				Postgres: config.Database{
 					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
+				},
+				Loki: config.ExternalService{
+					Host: config.DefaultLokiHost,
 				},
 				Tracer: config.Tracer{
 					JaegerHost: config.DefaultJaegerHost,
