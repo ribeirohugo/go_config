@@ -1,4 +1,4 @@
-module github.com/ribeirohugo/go_config
+module github.com/ribeirohugo/go_config/v2
 
 go 1.24
 
