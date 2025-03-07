@@ -1,74 +1,72 @@
-package toml
+package json
 
 import (
 	"os"
 	"testing"
 
-	"github.com/ribeirohugo/go_config/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-const configContent = `environment = "dev"
-service = "safesystem"
+const configContent = `{
+  "environment": "dev",
+  "service": "safesystem",
+  "server": {
+    "host": "localhost",
+    "port": 8080,
+    "allowed_origins": ["http://localhost:8080"]
+  },
+  "token": {
+    "secret": "token",
+    "max_age": 100
+  },
+  "mongodb": {
+    "database": "database",
+    "host": "localhost",
+    "password": "password",
+    "port": 8080,
+    "user": "username"
+  },
+  "mysql": {
+    "database": "database",
+    "host": "localhost",
+    "password": "password",
+    "port": 8080,
+    "user": "username"
+  },
+  "postgres": {
+    "database": "database",
+    "host": "localhost",
+    "password": "password",
+    "port": 8080,
+    "user": "username"
+  },
+  "audit": {
+    "enabled": true,
+    "host": "audit.domain",
+    "token": "audit.token"
+  },
+  "loki": {
+    "enabled": true,
+    "host": "loki.domain",
+    "token": "loki.token"
+  },
+  "jaeger": {
+    "enabled": true,
+    "host": "jaeger.domain",
+    "token": "jaeger.token"
+  }
+}`
 
-[server]
-host = "localhost"
-port = 8080
-allowed_origins = ['http://localhost:8080']
-
-[token]
-secret = "token"
-max_age = 100
-
-[mongodb]
-database = "database"
-host = "localhost"
-password = "password"
-port = 8080
-user = "username"
-
-[mysql]
-database = "database"
-host = "localhost"
-password = "password"
-port = 8080
-user = "username"
-
-[postgres]
-database = "database"
-host = "localhost"
-password = "password"
-port = 8080
-user = "username"
-
-[audit]
-enabled = true
-host = "audit.domain"
-token = "audit.token"
-
-[loki]
-enabled = true
-host = "loki.domain"
-token = "loki.token"
-
-[jaeger]
-enabled = true
-host = "jaeger.domain"
-token = "jaeger.token"
-
-[tracer]
-enabled = true
-jaeger_host = "https://tracer.domain"
-host = "https://tracer.domain"
-`
-
-const configContentInvalid = `token = 123
-[server]
-host = localhost
-port = "9399"
-`
+const configContentInvalid = `{
+  "token": 123,
+  "server": {
+    "host": "localhost",
+    "port": "9399"
+  }
+}`
 
 func TestLoad(t *testing.T) {
 	const (
@@ -139,7 +137,7 @@ func TestLoad(t *testing.T) {
 		Service:     service,
 	}
 
-	t.Run("should return a valid config from toml file", func(t *testing.T) {
+	t.Run("should return a valid config from json file", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
 			tempFile := createTempFile(t, configContent)
 
@@ -164,18 +162,23 @@ func TestLoad(t *testing.T) {
 					Port:           config.DefaultPostgresPort,
 					MigrationsPath: config.DefaultMigrationsPostgres,
 				},
+				Audit: config.ExternalService{
+					Enabled: false,
+				},
 				Loki: config.ExternalService{
-					Host: config.DefaultLokiHost,
+					Enabled: false,
+					Host:    config.DefaultLokiHost,
 				},
 				Jaeger: config.ExternalService{
-					Host: config.DefaultJaegerHost,
+					Enabled: false,
+					Host:    config.DefaultJaegerHost,
 				},
 				Token: config.Token{
 					MaxAge: config.DefaultSessionMaxAge,
 				},
 			}
 
-			tempFile := createTempFile(t, "")
+			tempFile := createTempFile(t, "{}")
 
 			cfg, err := Load(tempFile.Name())
 			require.NoError(t, err)
@@ -273,7 +276,7 @@ func TestLoadContent(t *testing.T) {
 		Service:     service,
 	}
 
-	t.Run("should return a valid config from toml", func(t *testing.T) {
+	t.Run("should return a valid config from json", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
 			cfg, err := LoadContent([]byte(configContent))
 			require.NoError(t, err)
@@ -305,14 +308,14 @@ func TestLoadContent(t *testing.T) {
 				},
 			}
 
-			cfg, err := LoadContent([]byte(""))
+			cfg, err := LoadContent([]byte("{}"))
 			require.NoError(t, err)
 			assert.Equal(t, expectedConfig, cfg)
 		})
 	})
 
 	t.Run("with error return", func(t *testing.T) {
-		cfg, err := LoadContent([]byte(configContentInvalid))
+		cfg, err := LoadContent([]byte(""))
 		assert.Equal(t, config.Config{}, cfg)
 		assert.Error(t, err)
 	})
@@ -321,7 +324,7 @@ func TestLoadContent(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "test.toml")
+	tempFile, err := os.CreateTemp("", "test.json")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)

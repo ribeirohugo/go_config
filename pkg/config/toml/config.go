@@ -1,15 +1,15 @@
-package yaml
+package toml
 
 import (
 	"io"
 	"os"
 
-	"github.com/ribeirohugo/go_config/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 
-	"gopkg.in/yaml.v3"
+	"github.com/BurntSushi/toml"
 )
 
-// Load loads configurations from a given yaml file path.
+// Load loads configurations from a given toml file path.
 func Load(filePath string) (config.Config, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -25,7 +25,7 @@ func Load(filePath string) (config.Config, error) {
 	return LoadContent(bytes)
 }
 
-// LoadContent loads configurations from a given yaml bytes content.
+// LoadContent loads configurations from a given toml bytes content.
 func LoadContent(content []byte) (config.Config, error) {
 	cfg := config.Config{
 		MySql: config.Database{
@@ -51,7 +51,7 @@ func LoadContent(content []byte) (config.Config, error) {
 		},
 	}
 
-	err := yaml.Unmarshal(content, &cfg)
+	err := toml.Unmarshal(content, &cfg)
 	if err != nil {
 		return config.Config{}, err
 	}

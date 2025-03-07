@@ -1,15 +1,14 @@
-package toml
+package xml
 
 import (
+	"encoding/xml"
 	"io"
 	"os"
 
-	"github.com/ribeirohugo/go_config/config"
-
-	"github.com/BurntSushi/toml"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 )
 
-// Load loads configurations from a given toml file path.
+// Load loads configurations from a given XML file path.
 func Load(filePath string) (config.Config, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -25,7 +24,7 @@ func Load(filePath string) (config.Config, error) {
 	return LoadContent(bytes)
 }
 
-// LoadContent loads configurations from a given toml bytes content.
+// LoadContent loads configurations from a given xml bytes content.
 func LoadContent(content []byte) (config.Config, error) {
 	cfg := config.Config{
 		MySql: config.Database{
@@ -40,18 +39,18 @@ func LoadContent(content []byte) (config.Config, error) {
 			Port:           config.DefaultPostgresPort,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
-		Token: config.Token{
-			MaxAge: config.DefaultSessionMaxAge,
-		},
 		Loki: config.ExternalService{
 			Host: config.DefaultLokiHost,
+		},
+		Token: config.Token{
+			MaxAge: config.DefaultSessionMaxAge,
 		},
 		Jaeger: config.ExternalService{
 			Host: config.DefaultJaegerHost,
 		},
 	}
 
-	err := toml.Unmarshal(content, &cfg)
+	err := xml.Unmarshal(content, &cfg)
 	if err != nil {
 		return config.Config{}, err
 	}

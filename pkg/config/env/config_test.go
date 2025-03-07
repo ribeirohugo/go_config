@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ribeirohugo/go_config/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

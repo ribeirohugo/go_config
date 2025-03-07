@@ -1,14 +1,15 @@
-package xml
+package yaml
 
 import (
-	"encoding/xml"
 	"io"
 	"os"
 
-	"github.com/ribeirohugo/go_config/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
+
+	"gopkg.in/yaml.v3"
 )
 
-// Load loads configurations from a given XML file path.
+// Load loads configurations from a given yaml file path.
 func Load(filePath string) (config.Config, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -24,7 +25,7 @@ func Load(filePath string) (config.Config, error) {
 	return LoadContent(bytes)
 }
 
-// LoadContent loads configurations from a given xml bytes content.
+// LoadContent loads configurations from a given yaml bytes content.
 func LoadContent(content []byte) (config.Config, error) {
 	cfg := config.Config{
 		MySql: config.Database{
@@ -39,18 +40,18 @@ func LoadContent(content []byte) (config.Config, error) {
 			Port:           config.DefaultPostgresPort,
 			MigrationsPath: config.DefaultMigrationsPostgres,
 		},
-		Loki: config.ExternalService{
-			Host: config.DefaultLokiHost,
-		},
 		Token: config.Token{
 			MaxAge: config.DefaultSessionMaxAge,
+		},
+		Loki: config.ExternalService{
+			Host: config.DefaultLokiHost,
 		},
 		Jaeger: config.ExternalService{
 			Host: config.DefaultJaegerHost,
 		},
 	}
 
-	err := xml.Unmarshal(content, &cfg)
+	err := yaml.Unmarshal(content, &cfg)
 	if err != nil {
 		return config.Config{}, err
 	}

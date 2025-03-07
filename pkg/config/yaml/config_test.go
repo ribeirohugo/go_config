@@ -1,98 +1,87 @@
-package xml
+package yaml
 
 import (
-	"encoding/xml"
 	"os"
 	"testing"
 
-	"github.com/ribeirohugo/go_config/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-const configContent = `<config>
-    <environment>dev</environment>
-    <service>safesystem</service>
-    <server>
-        <host>localhost</host>
-        <port>8080</port>
-        <allowed_origins>http://localhost:8080</allowed_origins>
-    </server>
-    <token>
-        <secret>token</secret>
-        <max_age>100</max_age>
-    </token>
-    <mongodb>
-        <database>database</database>
-        <host>localhost</host>
-        <password>password</password>
-        <port>8080</port>
-        <user>username</user>
-    </mongodb>
-    <mysql>
-        <database>database</database>
-        <host>localhost</host>
-        <password>password</password>
-        <port>8080</port>
-        <user>username</user>
-    </mysql>
-    <postgres>
-        <database>database</database>
-        <host>localhost</host>
-        <password>password</password>
-        <port>8080</port>
-        <user>username</user>
-    </postgres>
-    <audit>
-        <enabled>true</enabled>
-        <host>audit.domain</host>
-        <token>audit.token</token>
-    </audit>
-    <loki>
-        <enabled>true</enabled>
-        <host>loki.domain</host>
-        <token>loki.token</token>
-    </loki>
-    <jaeger>
-        <enabled>true</enabled>
-        <host>jaeger.domain</host>
-        <token>jaeger.token</token>
-    </jaeger>
-</config>
+const configContent = `environment: "dev"
+service: "safesystem"
+
+server:
+  host: "localhost"
+  port: 8080
+  allowed_origins: ["http://localhost:8080"]
+
+token:
+  secret: "token"
+  max_age: 100
+
+mongodb:
+  database: "database"
+  host: "localhost"
+  password: "password"
+  port: 8080
+  user: "username"
+
+mysql:
+  database: "database"
+  host: "localhost"
+  password: "password"
+  port: 8080
+  user: "username"
+
+postgres:
+  database: "database"
+  host: "localhost"
+  password: "password"
+  port: 8080
+  user: "username"
+
+audit:
+  enabled: true
+  host: "audit.domain"
+  token: "audit.token"
+
+loki:
+  enabled: true
+  host: "loki.domain"
+  token: "loki.token"
+
+jaeger:
+  enabled: true
+  host: "jaeger.domain"
+  token: "jaeger.token"
 `
 
-const configContentInvalid = `token = 123
-[server]
-host = localhost
-port = "9399"
+const configContentInvalid = `token: 123
+server:
+	host: localhost
+	port: "9399"
 `
 
-const configContentEmpty = `<config>
-</config>
-`
-
-func TestLoad(t *testing.T) {
+func TestLoadYaml(t *testing.T) {
 	const (
-		environment  = "dev"
-		service      = "safesystem"
-		serverHost   = "localhost"
-		serverPort   = 8080
-		database     = "database"
-		password     = "password"
-		username     = "username"
-		xmlLocalName = "config"
-		auditHost    = "audit.domain"
-		auditToken   = "audit.token"
-		lokiHost     = "loki.domain"
-		lokiToken    = "loki.token"
-		jaegerHost   = "jaeger.domain"
-		jaegerToken  = "jaeger.token"
+		environment = "dev"
+		service     = "safesystem"
+		serverHost  = "localhost"
+		serverPort  = 8080
+		database    = "database"
+		password    = "password"
+		username    = "username"
+		auditHost   = "audit.domain"
+		auditToken  = "audit.token"
+		lokiHost    = "loki.domain"
+		lokiToken   = "loki.token"
+		jaegerHost  = "jaeger.domain"
+		jaegerToken = "jaeger.token"
 	)
 	configTest := config.Config{
-		XMLName: xml.Name{
-			Local: xmlLocalName,
-		},
 		Server: config.Server{
 			Host:           serverHost,
 			Port:           serverPort,
@@ -145,7 +134,7 @@ func TestLoad(t *testing.T) {
 		Service:     service,
 	}
 
-	t.Run("should return a valid config from XML file", func(t *testing.T) {
+	t.Run("should return a valid toml", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
 			tempFile := createTempFile(t, configContent)
 
@@ -158,9 +147,6 @@ func TestLoad(t *testing.T) {
 
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
-				XMLName: xml.Name{
-					Local: xmlLocalName,
-				},
 				MySql: config.Database{
 					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
@@ -184,7 +170,7 @@ func TestLoad(t *testing.T) {
 				},
 			}
 
-			tempFile := createTempFile(t, configContentEmpty)
+			tempFile := createTempFile(t, "")
 
 			cfg, err := Load(tempFile.Name())
 			require.NoError(t, err)
@@ -215,25 +201,21 @@ func TestLoad(t *testing.T) {
 
 func TestLoadContent(t *testing.T) {
 	const (
-		environment  = "dev"
-		service      = "safesystem"
-		serverHost   = "localhost"
-		serverPort   = 8080
-		database     = "database"
-		password     = "password"
-		username     = "username"
-		xmlLocalName = "config"
-		auditHost    = "audit.domain"
-		auditToken   = "audit.token"
-		lokiHost     = "loki.domain"
-		lokiToken    = "loki.token"
-		jaegerHost   = "jaeger.domain"
-		jaegerToken  = "jaeger.token"
+		environment = "dev"
+		service     = "safesystem"
+		serverHost  = "localhost"
+		serverPort  = 8080
+		database    = "database"
+		password    = "password"
+		username    = "username"
+		auditHost   = "audit.domain"
+		auditToken  = "audit.token"
+		lokiHost    = "loki.domain"
+		lokiToken   = "loki.token"
+		jaegerHost  = "jaeger.domain"
+		jaegerToken = "jaeger.token"
 	)
 	configTest := config.Config{
-		XMLName: xml.Name{
-			Local: xmlLocalName,
-		},
 		Server: config.Server{
 			Host:           serverHost,
 			Port:           serverPort,
@@ -286,7 +268,7 @@ func TestLoadContent(t *testing.T) {
 		Service:     service,
 	}
 
-	t.Run("should return a valid config from xml", func(t *testing.T) {
+	t.Run("should return a valid config from yaml", func(t *testing.T) {
 		t.Run("with all fields", func(t *testing.T) {
 			cfg, err := LoadContent([]byte(configContent))
 			require.NoError(t, err)
@@ -295,9 +277,6 @@ func TestLoadContent(t *testing.T) {
 
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
-				XMLName: xml.Name{
-					Local: xmlLocalName,
-				},
 				MySql: config.Database{
 					Port:           config.DefaultMySqlPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
@@ -321,7 +300,7 @@ func TestLoadContent(t *testing.T) {
 				},
 			}
 
-			cfg, err := LoadContent([]byte(configContentEmpty))
+			cfg, err := LoadContent([]byte(""))
 			require.NoError(t, err)
 			assert.Equal(t, expectedConfig, cfg)
 		})
@@ -337,7 +316,7 @@ func TestLoadContent(t *testing.T) {
 func createTempFile(t *testing.T, fileContent string) *os.File {
 	t.Helper()
 
-	tempFile, err := os.CreateTemp("", "test.xml")
+	tempFile, err := os.CreateTemp("", "test.yaml")
 	require.NoError(t, err)
 
 	_, err = tempFile.WriteString(fileContent)
