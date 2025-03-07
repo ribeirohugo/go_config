@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ribeirohugo/go_config/pkg/config"
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 )
 
 const (
