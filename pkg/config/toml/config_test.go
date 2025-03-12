@@ -53,6 +53,11 @@ enabled = true
 host = "loki.domain"
 token = "loki.token"
 
+[tempo]
+enabled = true
+host = "tempo.domain"
+token = "tempo.token"
+
 [jaeger]
 enabled = true
 host = "jaeger.domain"
@@ -83,6 +88,8 @@ func TestLoad(t *testing.T) {
 		auditToken  = "audit.token"
 		lokiHost    = "loki.domain"
 		lokiToken   = "loki.token"
+		tempoHost   = "tempo.domain"
+		tempoToken  = "tempo.token"
 		jaegerHost  = "jaeger.domain"
 		jaegerToken = "jaeger.token"
 	)
@@ -130,6 +137,11 @@ func TestLoad(t *testing.T) {
 			Host:    lokiHost,
 			Token:   lokiToken,
 		},
+		Tempo: config.ExternalService{
+			Enabled: true,
+			Host:    tempoHost,
+			Token:   tempoToken,
+		},
 		Jaeger: config.ExternalService{
 			Enabled: true,
 			Host:    jaegerHost,
@@ -166,6 +178,9 @@ func TestLoad(t *testing.T) {
 				},
 				Loki: config.ExternalService{
 					Host: config.DefaultLokiHost,
+				},
+				Tempo: config.ExternalService{
+					Host: config.DefaultTempoHost,
 				},
 				Jaeger: config.ExternalService{
 					Host: config.DefaultJaegerHost,
@@ -217,6 +232,8 @@ func TestLoadContent(t *testing.T) {
 		auditToken  = "audit.token"
 		lokiHost    = "loki.domain"
 		lokiToken   = "loki.token"
+		tempoHost   = "tempo.domain"
+		tempoToken  = "tempo.token"
 		jaegerHost  = "jaeger.domain"
 		jaegerToken = "jaeger.token"
 	)
@@ -264,6 +281,11 @@ func TestLoadContent(t *testing.T) {
 			Host:    lokiHost,
 			Token:   lokiToken,
 		},
+		Tempo: config.ExternalService{
+			Enabled: true,
+			Host:    tempoHost,
+			Token:   tempoToken,
+		},
 		Jaeger: config.ExternalService{
 			Enabled: true,
 			Host:    jaegerHost,
@@ -296,6 +318,9 @@ func TestLoadContent(t *testing.T) {
 				},
 				Loki: config.ExternalService{
 					Host: config.DefaultLokiHost,
+				},
+				Tempo: config.ExternalService{
+					Host: config.DefaultTempoHost,
 				},
 				Jaeger: config.ExternalService{
 					Host: config.DefaultJaegerHost,
