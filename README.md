@@ -20,6 +20,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[audit]``     | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
 | ``[jaeger]``    | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
 | ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
+| ``[tempo]``     | Tempo tracer config data.             | `ExternalService` | ` `     | **NO**   |
 
 ### 1.1. Server type
 
@@ -71,6 +72,7 @@ and those values are described in the next table.
 | ``Audit``  | ` `                                      |
 | ``Jaeger`` | `http://localhost:14268/api/traces`      |
 | ``Loki``   | `http://localhost:3100/loki/api/v1/push` |
+| ``Tempo``  | `http://localhost:4318/v1/traces`        |
 
 ## 2. Load data
 
