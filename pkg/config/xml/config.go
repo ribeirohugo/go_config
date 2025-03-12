@@ -42,6 +42,9 @@ func LoadContent(content []byte) (config.Config, error) {
 		Loki: config.ExternalService{
 			Host: config.DefaultLokiHost,
 		},
+		Tempo: config.ExternalService{
+			Host: config.DefaultTempoHost,
+		},
 		Token: config.Token{
 			MaxAge: config.DefaultSessionMaxAge,
 		},
