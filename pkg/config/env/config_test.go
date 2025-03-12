@@ -61,8 +61,10 @@ func TestLoad(t *testing.T) {
 		auditToken  = "audit.token"
 		lokiHost    = "loki.domain"
 		lokiToken   = "loki.token"
+		tempoHost   = "tempo.domain"
+		tempoToken  = "tempo.token"
 		jaegerHost  = "jaeger.domain"
-		jaegerToken = "loki.token"
+		jaegerToken = "jaeger.token"
 	)
 	expectedCfg := config.Config{
 		Server: config.Server{
@@ -107,6 +109,11 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
+		},
+		Tempo: config.ExternalService{
+			Enabled: true,
+			Host:    tempoHost,
+			Token:   tempoToken,
 		},
 		Jaeger: config.ExternalService{
 			Enabled: true,
@@ -170,6 +177,12 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("LOKI_TOKEN", lokiToken)
 		require.NoError(t, err)
+		err = os.Setenv("TEMPO_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("TEMPO_HOST", tempoHost)
+		require.NoError(t, err)
+		err = os.Setenv("TEMPO_TOKEN", tempoToken)
+		require.NoError(t, err)
 		err = os.Setenv("JAEGER_ENABLED", "TRUE")
 		require.NoError(t, err)
 		err = os.Setenv("JAEGER_HOST", jaegerHost)
@@ -208,6 +221,9 @@ func TestLoad(t *testing.T) {
 				"LOKI_ENABLED",
 				"LOKI_HOST",
 				"LOKI_TOKEN",
+				"TEMPO_ENABLED",
+				"TEMPO_HOST",
+				"TEMPO_TOKEN",
 				"JAEGER_ENABLED",
 				"JAEGER_HOST",
 				"JAEGER_TOKEN",
@@ -237,6 +253,9 @@ func TestLoad(t *testing.T) {
 			},
 			Loki: config.ExternalService{
 				Host: config.DefaultLokiHost,
+			},
+			Tempo: config.ExternalService{
+				Host: config.DefaultTempoHost,
 			},
 			Jaeger: config.ExternalService{
 				Host: config.DefaultJaegerHost,

@@ -40,6 +40,14 @@ func Load() (config.Config, error) {
 	if lokiHost == "" {
 		lokiHost = config.DefaultLokiHost
 	}
+	tempoEnabled, err := getBool("TEMPO_ENABLED")
+	if err != nil {
+		return config.Config{}, err
+	}
+	tempoHost := os.Getenv("TEMPO_HOST")
+	if tempoHost == "" {
+		tempoHost = config.DefaultTempoHost
+	}
 	jaegerEnabled, err := getBool("JAEGER_ENABLED")
 	if err != nil {
 		return config.Config{}, err
@@ -120,10 +128,15 @@ func Load() (config.Config, error) {
 			Host:    lokiHost,
 			Token:   os.Getenv("LOKI_TOKEN"),
 		},
+		Tempo: config.ExternalService{
+			Enabled: tempoEnabled,
+			Host:    tempoHost,
+			Token:   os.Getenv("TEMPO_TOKEN"),
+		},
 		Jaeger: config.ExternalService{
 			Enabled: jaegerEnabled,
 			Host:    jaegerHost,
-			Token:   os.Getenv("LOKI_TOKEN"),
+			Token:   os.Getenv("JAEGER_TOKEN"),
 		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
