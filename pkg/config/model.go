@@ -14,10 +14,11 @@ type Config struct {
 	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
-	Audit  ExternalService `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
-	Jaeger ExternalService `toml:"jaeger" yaml:"jaeger" json:"jaeger,omitempty" xml:"jaeger"`
-	Loki   ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
-	Tempo  ExternalService `toml:"tempo" yaml:"tempo" json:"tempo,omitempty" xml:"tempo"`
+	Audit      ExternalService `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
+	Jaeger     ExternalService `toml:"jaeger" yaml:"jaeger" json:"jaeger,omitempty" xml:"jaeger"`
+	Loki       ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
+	Tempo      ExternalService `toml:"tempo" yaml:"tempo" json:"tempo,omitempty" xml:"tempo"`
+	Prometheus ExternalService `toml:"prometheus" yaml:"prometheus" json:"prometheus,omitempty" xml:"prometheus"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
