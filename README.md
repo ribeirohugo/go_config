@@ -8,19 +8,20 @@ It supports `toml`, `json`, `yaml` or `xml` file or content to instantiate envir
 Before to run application you may setup a supported``config.toml`` with ``Config`` values.
 Check out the following tables to know all ``Config`` parameters detailed.
 
-| Parameter       | Description                           | Type              | Default | Required |
-|:----------------|:--------------------------------------|:------------------|:--------|:---------|
-| ``environment`` | Website environment.                  | `string`          | ` `     | **NO**   |
-| ``service``     | Website service identifier as string. | `string`          | ` `     | **NO**   |
-| ``[server]``    | Http server config data.              | `Server`          | ` `     | **YES**  |
-| ``[token]``     | Token data config data.               | `Token`           | ` `     | **NO**   |
-| ``[mongodb]``   | Postgres database config data.        | `Database`        | ` `     | **NO**   |
-| ``[mysql]``     | MySql database config data.           | `Database`        | ` `     | **NO**   |
-| ``[postgres]``  | Postgres database config data.        | `Database`        | ` `     | **NO**   |
-| ``[audit]``     | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
-| ``[jaeger]``    | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
-| ``[loki]``      | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
-| ``[tempo]``     | Tempo tracer config data.             | `ExternalService` | ` `     | **NO**   |
+| Parameter        | Description                           | Type              | Default | Required |
+|:-----------------|:--------------------------------------|:------------------|:--------|:---------|
+| ``environment``  | Website environment.                  | `string`          | ` `     | **NO**   |
+| ``service``      | Website service identifier as string. | `string`          | ` `     | **NO**   |
+| ``[server]``     | Http server config data.              | `Server`          | ` `     | **YES**  |
+| ``[token]``      | Token data config data.               | `Token`           | ` `     | **NO**   |
+| ``[mongodb]``    | Postgres database config data.        | `Database`        | ` `     | **NO**   |
+| ``[mysql]``      | MySql database config data.           | `Database`        | ` `     | **NO**   |
+| ``[postgres]``   | Postgres database config data.        | `Database`        | ` `     | **NO**   |
+| ``[audit]``      | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
+| ``[jaeger]``     | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
+| ``[loki]``       | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
+| ``[tempo]``      | Tempo tracer config data.             | `ExternalService` | ` `     | **NO**   |
+| ``[prometheus]`` | Prometheus monitoring config data.    | `ExternalService` | ` `     | **NO**   |
 
 ### 1.1. Server type
 
@@ -67,12 +68,13 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 For `ExternalService` main config, the `Host` default value depends on the main service,
 and those values are described in the next table.
 
-| Service    | Default Host Value                       |
-|:-----------|:-----------------------------------------|
-| ``Audit``  | ` `                                      |
-| ``Jaeger`` | `http://localhost:14268/api/traces`      |
-| ``Loki``   | `http://localhost:3100/loki/api/v1/push` |
-| ``Tempo``  | `http://localhost:4318/v1/traces`        |
+| Service        | Default Host Value                       |
+|:---------------|:-----------------------------------------|
+| ``Audit``      | ` `                                      |
+| ``Jaeger``     | `http://localhost:14268/api/traces`      |
+| ``Loki``       | `http://localhost:3100/loki/api/v1/push` |
+| ``Prometheus`` | `http://localhost:9090/metrics`          |
+| ``Tempo``      | `http://localhost:4318/v1/traces`        |
 
 ## 2. Load data
 

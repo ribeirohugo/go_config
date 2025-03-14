@@ -40,6 +40,10 @@ func Load() (config.Config, error) {
 	if lokiHost == "" {
 		lokiHost = config.DefaultLokiHost
 	}
+	prometheusEnabled, err := getBool("PROMETHEUS_ENABLED")
+	if err != nil {
+		return config.Config{}, err
+	}
 	tempoEnabled, err := getBool("TEMPO_ENABLED")
 	if err != nil {
 		return config.Config{}, err
@@ -127,6 +131,11 @@ func Load() (config.Config, error) {
 			Enabled: lokiEnabled,
 			Host:    lokiHost,
 			Token:   os.Getenv("LOKI_TOKEN"),
+		},
+		Prometheus: config.ExternalService{
+			Enabled: prometheusEnabled,
+			Host:    os.Getenv("PROMETHEUS_HOST"),
+			Token:   os.Getenv("PROMETHEUS_TOKEN"),
 		},
 		Tempo: config.ExternalService{
 			Enabled: tempoEnabled,

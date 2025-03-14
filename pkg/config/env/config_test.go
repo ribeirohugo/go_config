@@ -50,21 +50,23 @@ func TestGetNumber(t *testing.T) {
 
 func TestLoad(t *testing.T) {
 	const (
-		environment = "dev"
-		service     = "safesystem"
-		serverHost  = "localhost"
-		serverPort  = 8080
-		database    = "database"
-		password    = "password"
-		username    = "username"
-		auditHost   = "audit.domain"
-		auditToken  = "audit.token"
-		lokiHost    = "loki.domain"
-		lokiToken   = "loki.token"
-		tempoHost   = "tempo.domain"
-		tempoToken  = "tempo.token"
-		jaegerHost  = "jaeger.domain"
-		jaegerToken = "jaeger.token"
+		environment     = "dev"
+		service         = "safesystem"
+		serverHost      = "localhost"
+		serverPort      = 8080
+		database        = "database"
+		password        = "password"
+		username        = "username"
+		auditHost       = "audit.domain"
+		auditToken      = "audit.token"
+		lokiHost        = "loki.domain"
+		lokiToken       = "loki.token"
+		prometheusHost  = "prometheus.host"
+		prometheusToken = "prometheus.token"
+		tempoHost       = "tempo.domain"
+		tempoToken      = "tempo.token"
+		jaegerHost      = "jaeger.domain"
+		jaegerToken     = "jaeger.token"
 	)
 	expectedCfg := config.Config{
 		Server: config.Server{
@@ -109,6 +111,11 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
+		},
+		Prometheus: config.ExternalService{
+			Enabled: true,
+			Host:    prometheusHost,
+			Token:   prometheusToken,
 		},
 		Tempo: config.ExternalService{
 			Enabled: true,
@@ -177,6 +184,12 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("LOKI_TOKEN", lokiToken)
 		require.NoError(t, err)
+		err = os.Setenv("PROMETHEUS_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("PROMETHEUS_HOST", prometheusHost)
+		require.NoError(t, err)
+		err = os.Setenv("PROMETHEUS_TOKEN", prometheusToken)
+		require.NoError(t, err)
 		err = os.Setenv("TEMPO_ENABLED", "TRUE")
 		require.NoError(t, err)
 		err = os.Setenv("TEMPO_HOST", tempoHost)
@@ -221,6 +234,9 @@ func TestLoad(t *testing.T) {
 				"LOKI_ENABLED",
 				"LOKI_HOST",
 				"LOKI_TOKEN",
+				"PROMETHEUS_ENABLED",
+				"PROMETHEUS_HOST",
+				"PROMETHEUS_TOKEN",
 				"TEMPO_ENABLED",
 				"TEMPO_HOST",
 				"TEMPO_TOKEN",
