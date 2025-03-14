@@ -53,6 +53,11 @@ const configContent = `{
     "host": "loki.domain",
     "token": "loki.token"
   },
+  "prometheus": {
+    "enabled": true,
+    "host": "prometheus.domain",
+    "token": "prometheus.token"
+  },
   "tempo": {
     "enabled": true,
     "host": "tempo.domain",
@@ -75,21 +80,23 @@ const configContentInvalid = `{
 
 func TestLoad(t *testing.T) {
 	const (
-		environment = "dev"
-		service     = "safesystem"
-		serverHost  = "localhost"
-		serverPort  = 8080
-		database    = "database"
-		password    = "password"
-		username    = "username"
-		auditHost   = "audit.domain"
-		auditToken  = "audit.token"
-		lokiHost    = "loki.domain"
-		lokiToken   = "loki.token"
-		tempoHost   = "tempo.domain"
-		tempoToken  = "tempo.token"
-		jaegerHost  = "jaeger.domain"
-		jaegerToken = "jaeger.token"
+		environment     = "dev"
+		service         = "safesystem"
+		serverHost      = "localhost"
+		serverPort      = 8080
+		database        = "database"
+		password        = "password"
+		username        = "username"
+		auditHost       = "audit.domain"
+		auditToken      = "audit.token"
+		lokiHost        = "loki.domain"
+		lokiToken       = "loki.token"
+		prometheusHost  = "prometheus.domain"
+		prometheusToken = "prometheus.token"
+		tempoHost       = "tempo.domain"
+		tempoToken      = "tempo.token"
+		jaegerHost      = "jaeger.domain"
+		jaegerToken     = "jaeger.token"
 	)
 	configTest := config.Config{
 		Server: config.Server{
@@ -134,6 +141,11 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
+		},
+		Prometheus: config.ExternalService{
+			Enabled: true,
+			Host:    prometheusHost,
+			Token:   prometheusToken,
 		},
 		Tempo: config.ExternalService{
 			Enabled: true,
@@ -225,21 +237,23 @@ func TestLoad(t *testing.T) {
 
 func TestLoadContent(t *testing.T) {
 	const (
-		environment = "dev"
-		service     = "safesystem"
-		serverHost  = "localhost"
-		serverPort  = 8080
-		database    = "database"
-		password    = "password"
-		username    = "username"
-		auditHost   = "audit.domain"
-		auditToken  = "audit.token"
-		lokiHost    = "loki.domain"
-		lokiToken   = "loki.token"
-		tempoHost   = "tempo.domain"
-		tempoToken  = "tempo.token"
-		jaegerHost  = "jaeger.domain"
-		jaegerToken = "jaeger.token"
+		environment     = "dev"
+		service         = "safesystem"
+		serverHost      = "localhost"
+		serverPort      = 8080
+		database        = "database"
+		password        = "password"
+		username        = "username"
+		auditHost       = "audit.domain"
+		auditToken      = "audit.token"
+		lokiHost        = "loki.domain"
+		lokiToken       = "loki.token"
+		prometheusHost  = "prometheus.domain"
+		prometheusToken = "prometheus.token"
+		tempoHost       = "tempo.domain"
+		tempoToken      = "tempo.token"
+		jaegerHost      = "jaeger.domain"
+		jaegerToken     = "jaeger.token"
 	)
 	configTest := config.Config{
 		Server: config.Server{
@@ -284,6 +298,11 @@ func TestLoadContent(t *testing.T) {
 			Enabled: true,
 			Host:    lokiHost,
 			Token:   lokiToken,
+		},
+		Prometheus: config.ExternalService{
+			Enabled: true,
+			Host:    prometheusHost,
+			Token:   prometheusToken,
 		},
 		Tempo: config.ExternalService{
 			Enabled: true,
