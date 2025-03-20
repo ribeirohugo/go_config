@@ -73,7 +73,7 @@ and those values are described in the next table.
 | ``Audit``      | ` `                                      |
 | ``Jaeger``     | `http://localhost:14268/api/traces`      |
 | ``Loki``       | `http://localhost:3100/loki/api/v1/push` |
-| ``Prometheus`` | `http://localhost:9090/metrics`          |
+| ``Prometheus`` | ` `                                      |
 | ``Tempo``      | `http://localhost:4318/v1/traces`        |
 
 ## 2. Load data
