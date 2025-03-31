@@ -4,10 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ribeirohugo/go_config/v2/pkg/config"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 )
 
 func TestGetNumber(t *testing.T) {
@@ -256,7 +256,7 @@ func TestLoad(t *testing.T) {
 	t.Run("without optional fields", func(t *testing.T) {
 		expectedConfig := config.Config{
 			MySql: config.Database{
-				Port:           config.DefaultMySqlPort,
+				Port:           config.DefaultMySQLPort,
 				MigrationsPath: config.DefaultMigrationsMysql,
 			},
 			MongoDb: config.Database{
