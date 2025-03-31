@@ -150,6 +150,7 @@ func Load() (config.Config, error) {
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
 	}
+
 	return cfg, nil
 }
 
