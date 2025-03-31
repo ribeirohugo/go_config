@@ -4,9 +4,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/ribeirohugo/go_config/v2/pkg/config"
-
 	"gopkg.in/yaml.v3"
+
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 )
 
 // Load loads configurations from a given yaml file path.

@@ -4,9 +4,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/ribeirohugo/go_config/v2/pkg/config"
-
 	"github.com/BurntSushi/toml"
+
+	"github.com/ribeirohugo/go_config/v2/pkg/config"
 )
 
 // Load loads configurations from a given toml file path.
