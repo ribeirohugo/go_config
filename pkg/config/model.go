@@ -11,7 +11,7 @@ type Config struct {
 	Token  Token  `toml:"token" yaml:"token" json:"token,omitempty" xml:"token"`
 
 	MongoDb  Database `toml:"mongodb" yaml:"mongodb" json:"mongodb,omitempty" xml:"mongodb"`
-	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"`
+	MySql    Database `toml:"mysql" yaml:"mysql" json:"mysql,omitempty" xml:"mysql"` //nolint:revive
 	Postgres Database `toml:"postgres" yaml:"postgres" json:"postgres,omitempty" xml:"postgres"`
 
 	Audit      ExternalService `toml:"audit" yaml:"audit" json:"audit,omitempty" xml:"audit"`
@@ -40,7 +40,7 @@ type Database struct {
 type Server struct {
 	Host           string   `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
 	Port           int      `toml:"port" yaml:"port" json:"port,omitempty" xml:"port"`
-	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins,omitempty" xml:"allowed_origins"`
+	AllowedOrigins []string `toml:"allowed_origins" yaml:"allowed_origins" json:"allowed_origins,omitempty" xml:"allowed_origins"` //nolint:lll
 }
 
 // Token holds application token secret and expire time in seconds.

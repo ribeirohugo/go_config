@@ -175,7 +175,7 @@ func TestLoad(t *testing.T) {
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
 				MySql: config.Database{
-					Port:           config.DefaultMySqlPort,
+					Port:           config.DefaultMySQLPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
@@ -328,7 +328,7 @@ func TestLoadContent(t *testing.T) {
 		t.Run("without optional fields", func(t *testing.T) {
 			expectedConfig := config.Config{
 				MySql: config.Database{
-					Port:           config.DefaultMySqlPort,
+					Port:           config.DefaultMySQLPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{

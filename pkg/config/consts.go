@@ -5,7 +5,7 @@ const (
 	DefaultMigrationsMysql    = "file://migrations/mysql"
 	DefaultMigrationsPostgres = "file://migrations/postgres"
 	DefaultMongoPort          = 27017
-	DefaultMySqlPort          = 3306
+	DefaultMySQLPort          = 3306
 	DefaultPostgresPort       = 5432
 	DefaultSessionMaxAge      = 86400 // 24 hours
 	DefaultJaegerHost         = "http://localhost:14268/api/traces"

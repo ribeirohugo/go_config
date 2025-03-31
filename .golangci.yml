@@ -27,10 +27,10 @@ linters:
     - unparam
     - unused
     - whitespace
-    - wsl
 
   disable:
     - wrapcheck
+    - wsl
 
   settings:
     lll:

@@ -74,7 +74,7 @@ func Load() (config.Config, error) {
 	if mySQLMigrationsPath == "" {
 		mySQLMigrationsPath = config.DefaultMigrationsMysql
 	}
-	mySQLPort, err := getNumber("MYSQL_PORT", config.DefaultMySqlPort)
+	mySQLPort, err := getNumber("MYSQL_PORT", config.DefaultMySQLPort)
 	if err != nil {
 		return config.Config{}, err
 	}

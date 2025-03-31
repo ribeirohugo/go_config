@@ -186,7 +186,7 @@ func TestLoad(t *testing.T) {
 					Local: xmlLocalName,
 				},
 				MySql: config.Database{
-					Port:           config.DefaultMySqlPort,
+					Port:           config.DefaultMySQLPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
@@ -340,7 +340,7 @@ func TestLoadContent(t *testing.T) {
 					Local: xmlLocalName,
 				},
 				MySql: config.Database{
-					Port:           config.DefaultMySqlPort,
+					Port:           config.DefaultMySQLPort,
 					MigrationsPath: config.DefaultMigrationsMysql,
 				},
 				MongoDb: config.Database{
