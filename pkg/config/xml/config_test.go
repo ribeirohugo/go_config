@@ -69,6 +69,11 @@ const configContent = `<config>
         <host>jaeger.domain</host>
         <token>jaeger.token</token>
     </jaeger>
+    <redis>
+        <enabled>true</enabled>
+        <host>redis.domain</host>
+        <token>redis.token</token>
+    </redis>
 </config>
 `
 
@@ -102,6 +107,8 @@ func TestLoad(t *testing.T) {
 		tempoToken      = "tempo.token"
 		jaegerHost      = "jaeger.domain"
 		jaegerToken     = "jaeger.token"
+		redisHost       = "redis.domain"
+		redisToken      = "redis.token"
 	)
 	configTest := config.XML{
 		XMLName: xml.Name{
@@ -166,6 +173,11 @@ func TestLoad(t *testing.T) {
 				Host:    jaegerHost,
 				Token:   jaegerToken,
 			},
+			Redis: config.ExternalService{
+				Enabled: true,
+				Host:    redisHost,
+				Token:   redisToken,
+			},
 			Environment: environment,
 			Service:     service,
 		},
@@ -208,6 +220,9 @@ func TestLoad(t *testing.T) {
 					},
 					Jaeger: config.ExternalService{
 						Host: config.DefaultJaegerHost,
+					},
+					Redis: config.ExternalService{
+						Host: config.DefaultRedisHost,
 					},
 					Token: config.Token{
 						MaxAge: config.DefaultSessionMaxAge,
@@ -264,6 +279,8 @@ func TestLoadContent(t *testing.T) {
 		tempoToken      = "tempo.token"
 		jaegerHost      = "jaeger.domain"
 		jaegerToken     = "jaeger.token"
+		redisHost       = "redis.domain"
+		redisToken      = "redis.token"
 	)
 	configTest := config.XML{
 		XMLName: xml.Name{
@@ -328,6 +345,11 @@ func TestLoadContent(t *testing.T) {
 				Host:    jaegerHost,
 				Token:   jaegerToken,
 			},
+			Redis: config.ExternalService{
+				Enabled: true,
+				Host:    redisHost,
+				Token:   redisToken,
+			},
 			Environment: environment,
 			Service:     service,
 		},
@@ -366,6 +388,9 @@ func TestLoadContent(t *testing.T) {
 					},
 					Jaeger: config.ExternalService{
 						Host: config.DefaultJaegerHost,
+					},
+					Redis: config.ExternalService{
+						Host: config.DefaultRedisHost,
 					},
 					Token: config.Token{
 						MaxAge: config.DefaultSessionMaxAge,

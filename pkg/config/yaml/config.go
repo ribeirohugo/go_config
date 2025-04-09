@@ -52,6 +52,9 @@ func LoadContent(content []byte) (config.Config, error) {
 		Jaeger: config.ExternalService{
 			Host: config.DefaultJaegerHost,
 		},
+		Redis: config.ExternalService{
+			Host: config.DefaultRedisHost,
+		},
 	}
 
 	err := yaml.Unmarshal(content, &cfg)
