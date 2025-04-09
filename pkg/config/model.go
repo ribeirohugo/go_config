@@ -22,6 +22,11 @@ type Config struct {
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
+}
+
+// XML holds configurations data and methods, with XML support.
+type XML struct {
+	Config
 
 	XMLName xml.Name `xml:"config"`
 }

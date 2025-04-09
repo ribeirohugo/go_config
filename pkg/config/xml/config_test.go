@@ -103,70 +103,72 @@ func TestLoad(t *testing.T) {
 		jaegerHost      = "jaeger.domain"
 		jaegerToken     = "jaeger.token"
 	)
-	configTest := config.Config{
+	configTest := config.XML{
 		XMLName: xml.Name{
 			Local: xmlLocalName,
 		},
-		Server: config.Server{
-			Host:           serverHost,
-			Port:           serverPort,
-			AllowedOrigins: []string{"http://localhost:8080"},
+		Config: config.Config{
+			Server: config.Server{
+				Host:           serverHost,
+				Port:           serverPort,
+				AllowedOrigins: []string{"http://localhost:8080"},
+			},
+			Token: config.Token{
+				MaxAge: 100,
+				Secret: "token",
+			},
+			MongoDb: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsMongo,
+			},
+			MySql: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsMysql,
+			},
+			Postgres: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsPostgres,
+			},
+			Audit: config.ExternalService{
+				Enabled: true,
+				Host:    auditHost,
+				Token:   auditToken,
+			},
+			Loki: config.ExternalService{
+				Enabled: true,
+				Host:    lokiHost,
+				Token:   lokiToken,
+			},
+			Prometheus: config.ExternalService{
+				Enabled: true,
+				Host:    prometheusHost,
+				Token:   prometheusToken,
+			},
+			Tempo: config.ExternalService{
+				Enabled: true,
+				Host:    tempoHost,
+				Token:   tempoToken,
+			},
+			Jaeger: config.ExternalService{
+				Enabled: true,
+				Host:    jaegerHost,
+				Token:   jaegerToken,
+			},
+			Environment: environment,
+			Service:     service,
 		},
-		Token: config.Token{
-			MaxAge: 100,
-			Secret: "token",
-		},
-		MongoDb: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsMongo,
-		},
-		MySql: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsMysql,
-		},
-		Postgres: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsPostgres,
-		},
-		Audit: config.ExternalService{
-			Enabled: true,
-			Host:    auditHost,
-			Token:   auditToken,
-		},
-		Loki: config.ExternalService{
-			Enabled: true,
-			Host:    lokiHost,
-			Token:   lokiToken,
-		},
-		Prometheus: config.ExternalService{
-			Enabled: true,
-			Host:    prometheusHost,
-			Token:   prometheusToken,
-		},
-		Tempo: config.ExternalService{
-			Enabled: true,
-			Host:    tempoHost,
-			Token:   tempoToken,
-		},
-		Jaeger: config.ExternalService{
-			Enabled: true,
-			Host:    jaegerHost,
-			Token:   jaegerToken,
-		},
-		Environment: environment,
-		Service:     service,
 	}
 
 	t.Run("should return a valid config from XML file", func(t *testing.T) {
@@ -181,33 +183,35 @@ func TestLoad(t *testing.T) {
 		})
 
 		t.Run("without optional fields", func(t *testing.T) {
-			expectedConfig := config.Config{
+			expectedConfig := config.XML{
 				XMLName: xml.Name{
 					Local: xmlLocalName,
 				},
-				MySql: config.Database{
-					Port:           config.DefaultMySQLPort,
-					MigrationsPath: config.DefaultMigrationsMysql,
-				},
-				MongoDb: config.Database{
-					Port:           config.DefaultMongoPort,
-					MigrationsPath: config.DefaultMigrationsMongo,
-				},
-				Postgres: config.Database{
-					Port:           config.DefaultPostgresPort,
-					MigrationsPath: config.DefaultMigrationsPostgres,
-				},
-				Loki: config.ExternalService{
-					Host: config.DefaultLokiHost,
-				},
-				Tempo: config.ExternalService{
-					Host: config.DefaultTempoHost,
-				},
-				Jaeger: config.ExternalService{
-					Host: config.DefaultJaegerHost,
-				},
-				Token: config.Token{
-					MaxAge: config.DefaultSessionMaxAge,
+				Config: config.Config{
+					MySql: config.Database{
+						Port:           config.DefaultMySQLPort,
+						MigrationsPath: config.DefaultMigrationsMysql,
+					},
+					MongoDb: config.Database{
+						Port:           config.DefaultMongoPort,
+						MigrationsPath: config.DefaultMigrationsMongo,
+					},
+					Postgres: config.Database{
+						Port:           config.DefaultPostgresPort,
+						MigrationsPath: config.DefaultMigrationsPostgres,
+					},
+					Loki: config.ExternalService{
+						Host: config.DefaultLokiHost,
+					},
+					Tempo: config.ExternalService{
+						Host: config.DefaultTempoHost,
+					},
+					Jaeger: config.ExternalService{
+						Host: config.DefaultJaegerHost,
+					},
+					Token: config.Token{
+						MaxAge: config.DefaultSessionMaxAge,
+					},
 				},
 			}
 
@@ -224,7 +228,7 @@ func TestLoad(t *testing.T) {
 	t.Run("with error return", func(t *testing.T) {
 		t.Run("file doesn't exist", func(t *testing.T) {
 			cfg, err := Load("")
-			assert.Equal(t, config.Config{}, cfg)
+			assert.Equal(t, config.XML{}, cfg)
 			assert.Error(t, err)
 		})
 
@@ -232,7 +236,7 @@ func TestLoad(t *testing.T) {
 			tempFile := createTempFile(t, configContentInvalid)
 
 			cfg, err := Load(tempFile.Name())
-			assert.Equal(t, config.Config{}, cfg)
+			assert.Equal(t, config.XML{}, cfg)
 			assert.Error(t, err)
 
 			closeFile(t, tempFile)
@@ -261,70 +265,72 @@ func TestLoadContent(t *testing.T) {
 		jaegerHost      = "jaeger.domain"
 		jaegerToken     = "jaeger.token"
 	)
-	configTest := config.Config{
+	configTest := config.XML{
 		XMLName: xml.Name{
 			Local: xmlLocalName,
 		},
-		Server: config.Server{
-			Host:           serverHost,
-			Port:           serverPort,
-			AllowedOrigins: []string{"http://localhost:8080"},
+		Config: config.Config{
+			Server: config.Server{
+				Host:           serverHost,
+				Port:           serverPort,
+				AllowedOrigins: []string{"http://localhost:8080"},
+			},
+			Token: config.Token{
+				MaxAge: 100,
+				Secret: "token",
+			},
+			MongoDb: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsMongo,
+			},
+			MySql: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsMysql,
+			},
+			Postgres: config.Database{
+				Host:           serverHost,
+				Port:           serverPort,
+				User:           username,
+				Password:       password,
+				Db:             database,
+				MigrationsPath: config.DefaultMigrationsPostgres,
+			},
+			Audit: config.ExternalService{
+				Enabled: true,
+				Host:    auditHost,
+				Token:   auditToken,
+			},
+			Loki: config.ExternalService{
+				Enabled: true,
+				Host:    lokiHost,
+				Token:   lokiToken,
+			},
+			Prometheus: config.ExternalService{
+				Enabled: true,
+				Host:    prometheusHost,
+				Token:   prometheusToken,
+			},
+			Tempo: config.ExternalService{
+				Enabled: true,
+				Host:    tempoHost,
+				Token:   tempoToken,
+			},
+			Jaeger: config.ExternalService{
+				Enabled: true,
+				Host:    jaegerHost,
+				Token:   jaegerToken,
+			},
+			Environment: environment,
+			Service:     service,
 		},
-		Token: config.Token{
-			MaxAge: 100,
-			Secret: "token",
-		},
-		MongoDb: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsMongo,
-		},
-		MySql: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsMysql,
-		},
-		Postgres: config.Database{
-			Host:           serverHost,
-			Port:           serverPort,
-			User:           username,
-			Password:       password,
-			Db:             database,
-			MigrationsPath: config.DefaultMigrationsPostgres,
-		},
-		Audit: config.ExternalService{
-			Enabled: true,
-			Host:    auditHost,
-			Token:   auditToken,
-		},
-		Loki: config.ExternalService{
-			Enabled: true,
-			Host:    lokiHost,
-			Token:   lokiToken,
-		},
-		Prometheus: config.ExternalService{
-			Enabled: true,
-			Host:    prometheusHost,
-			Token:   prometheusToken,
-		},
-		Tempo: config.ExternalService{
-			Enabled: true,
-			Host:    tempoHost,
-			Token:   tempoToken,
-		},
-		Jaeger: config.ExternalService{
-			Enabled: true,
-			Host:    jaegerHost,
-			Token:   jaegerToken,
-		},
-		Environment: environment,
-		Service:     service,
 	}
 
 	t.Run("should return a valid config from xml", func(t *testing.T) {
@@ -335,33 +341,35 @@ func TestLoadContent(t *testing.T) {
 		})
 
 		t.Run("without optional fields", func(t *testing.T) {
-			expectedConfig := config.Config{
+			expectedConfig := config.XML{
 				XMLName: xml.Name{
 					Local: xmlLocalName,
 				},
-				MySql: config.Database{
-					Port:           config.DefaultMySQLPort,
-					MigrationsPath: config.DefaultMigrationsMysql,
-				},
-				MongoDb: config.Database{
-					Port:           config.DefaultMongoPort,
-					MigrationsPath: config.DefaultMigrationsMongo,
-				},
-				Postgres: config.Database{
-					Port:           config.DefaultPostgresPort,
-					MigrationsPath: config.DefaultMigrationsPostgres,
-				},
-				Loki: config.ExternalService{
-					Host: config.DefaultLokiHost,
-				},
-				Tempo: config.ExternalService{
-					Host: config.DefaultTempoHost,
-				},
-				Jaeger: config.ExternalService{
-					Host: config.DefaultJaegerHost,
-				},
-				Token: config.Token{
-					MaxAge: config.DefaultSessionMaxAge,
+				Config: config.Config{
+					MySql: config.Database{
+						Port:           config.DefaultMySQLPort,
+						MigrationsPath: config.DefaultMigrationsMysql,
+					},
+					MongoDb: config.Database{
+						Port:           config.DefaultMongoPort,
+						MigrationsPath: config.DefaultMigrationsMongo,
+					},
+					Postgres: config.Database{
+						Port:           config.DefaultPostgresPort,
+						MigrationsPath: config.DefaultMigrationsPostgres,
+					},
+					Loki: config.ExternalService{
+						Host: config.DefaultLokiHost,
+					},
+					Tempo: config.ExternalService{
+						Host: config.DefaultTempoHost,
+					},
+					Jaeger: config.ExternalService{
+						Host: config.DefaultJaegerHost,
+					},
+					Token: config.Token{
+						MaxAge: config.DefaultSessionMaxAge,
+					},
 				},
 			}
 
@@ -373,7 +381,7 @@ func TestLoadContent(t *testing.T) {
 
 	t.Run("with error return", func(t *testing.T) {
 		cfg, err := LoadContent([]byte(configContentInvalid))
-		assert.Equal(t, config.Config{}, cfg)
+		assert.Equal(t, config.XML{}, cfg)
 		assert.Error(t, err)
 	})
 }
