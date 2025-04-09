@@ -46,6 +46,9 @@ func LoadContent(content []byte) (config.XML, error) {
 			Tempo: config.ExternalService{
 				Host: config.DefaultTempoHost,
 			},
+			Redis: config.ExternalService{
+				Host: config.DefaultRedisHost,
+			},
 			Token: config.Token{
 				MaxAge: config.DefaultSessionMaxAge,
 			},
