@@ -67,6 +67,8 @@ func TestLoad(t *testing.T) {
 		tempoToken      = "tempo.token"
 		jaegerHost      = "jaeger.domain"
 		jaegerToken     = "jaeger.token"
+		redisHost       = "redis.domain"
+		redisToken      = "redis.token"
 	)
 	expectedCfg := config.Config{
 		Server: config.Server{
@@ -126,6 +128,11 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    jaegerHost,
 			Token:   jaegerToken,
+		},
+		Redis: config.ExternalService{
+			Enabled: true,
+			Host:    redisHost,
+			Token:   redisToken,
 		},
 		Environment: environment,
 		Service:     service,
@@ -202,6 +209,12 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("JAEGER_TOKEN", jaegerToken)
 		require.NoError(t, err)
+		err = os.Setenv("REDIS_ENABLED", "TRUE")
+		require.NoError(t, err)
+		err = os.Setenv("REDIS_HOST", redisHost)
+		require.NoError(t, err)
+		err = os.Setenv("REDIS_TOKEN", redisToken)
+		require.NoError(t, err)
 		err = os.Setenv("SERVICE", service)
 		require.NoError(t, err)
 		err = os.Setenv("ENVIRONMENT", environment)
@@ -243,6 +256,9 @@ func TestLoad(t *testing.T) {
 				"JAEGER_ENABLED",
 				"JAEGER_HOST",
 				"JAEGER_TOKEN",
+				"REDIS_ENABLED",
+				"REDIS_HOST",
+				"REDIS_TOKEN",
 				"SERVICE",
 				"ENVIRONMENT",
 			)
@@ -275,6 +291,9 @@ func TestLoad(t *testing.T) {
 			},
 			Jaeger: config.ExternalService{
 				Host: config.DefaultJaegerHost,
+			},
+			Redis: config.ExternalService{
+				Host: config.DefaultRedisHost,
 			},
 			Token: config.Token{
 				MaxAge: config.DefaultSessionMaxAge,

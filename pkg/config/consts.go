@@ -11,4 +11,5 @@ const (
 	DefaultJaegerHost         = "http://localhost:14268/api/traces"
 	DefaultLokiHost           = "http://localhost:3100/loki/api/v1/push"
 	DefaultTempoHost          = "http://localhost:4318/v1/traces"
+	DefaultRedisHost          = "localhost:6379"
 )

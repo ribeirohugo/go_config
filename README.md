@@ -22,6 +22,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[loki]``       | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
 | ``[tempo]``      | Tempo tracer config data.             | `ExternalService` | ` `     | **NO**   |
 | ``[prometheus]`` | Prometheus monitoring config data.    | `ExternalService` | ` `     | **NO**   |
+| ``[redis]``      | Redis cache config data.              | `ExternalService` | ` `     | **NO**   |
 
 ### 1.1. Server type
 
@@ -75,6 +76,7 @@ and those values are described in the next table.
 | ``Loki``       | `http://localhost:3100/loki/api/v1/push` |
 | ``Prometheus`` | ` `                                      |
 | ``Tempo``      | `http://localhost:4318/v1/traces`        |
+| ``Redis``      | `localhost:6379`                         |
 
 ## 2. Load data
 

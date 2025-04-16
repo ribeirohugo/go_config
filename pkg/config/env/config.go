@@ -60,6 +60,14 @@ func Load() (config.Config, error) {
 	if jaegerHost == "" {
 		jaegerHost = config.DefaultJaegerHost
 	}
+	redisEnabled, err := getBool("REDIS_ENABLED")
+	if err != nil {
+		return config.Config{}, err
+	}
+	redisHost := os.Getenv("REDIS_HOST")
+	if redisHost == "" {
+		redisHost = config.DefaultRedisHost
+	}
 
 	// Load Defaults
 	mongoDBMigrationsPath := os.Getenv("MONGODB_MIGRATIONS_PATH")
@@ -146,6 +154,11 @@ func Load() (config.Config, error) {
 			Enabled: jaegerEnabled,
 			Host:    jaegerHost,
 			Token:   os.Getenv("JAEGER_TOKEN"),
+		},
+		Redis: config.ExternalService{
+			Enabled: redisEnabled,
+			Host:    redisHost,
+			Token:   os.Getenv("REDIS_TOKEN"),
 		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),

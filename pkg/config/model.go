@@ -19,6 +19,7 @@ type Config struct {
 	Loki       ExternalService `toml:"loki" yaml:"loki" json:"loki,omitempty" xml:"loki"`
 	Tempo      ExternalService `toml:"tempo" yaml:"tempo" json:"tempo,omitempty" xml:"tempo"`
 	Prometheus ExternalService `toml:"prometheus" yaml:"prometheus" json:"prometheus,omitempty" xml:"prometheus"`
+	Redis      ExternalService `toml:"redis" yaml:"redis" json:"redis,omitempty" xml:"redis"`
 
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
