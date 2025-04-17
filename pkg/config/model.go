@@ -24,7 +24,7 @@ type Config struct {
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
 
-	Settings map[string]string `toml:"settings" yaml:"settings" json:"settings,omitempty" xml:"settings"`
+	Settings map[string]string `toml:"settings" yaml:"settings" json:"settings,omitempty"`
 }
 
 // XML holds configurations data and methods, with XML support.
