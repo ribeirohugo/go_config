@@ -8,21 +8,24 @@ It supports `toml`, `json`, `yaml` or `xml` file or content to instantiate envir
 Before to run application you may setup a supported``config.toml`` with ``Config`` values.
 Check out the following tables to know all ``Config`` parameters detailed.
 
-| Parameter        | Description                           | Type              | Default | Required |
-|:-----------------|:--------------------------------------|:------------------|:--------|:---------|
-| ``environment``  | Website environment.                  | `string`          | ` `     | **NO**   |
-| ``service``      | Website service identifier as string. | `string`          | ` `     | **NO**   |
-| ``[server]``     | Http server config data.              | `Server`          | ` `     | **YES**  |
-| ``[token]``      | Token data config data.               | `Token`           | ` `     | **NO**   |
-| ``[mongodb]``    | Postgres database config data.        | `Database`        | ` `     | **NO**   |
-| ``[mysql]``      | MySql database config data.           | `Database`        | ` `     | **NO**   |
-| ``[postgres]``   | Postgres database config data.        | `Database`        | ` `     | **NO**   |
-| ``[audit]``      | Auditing options config data.         | `ExternalService` | ` `     | **NO**   |
-| ``[jaeger]``     | Jaeger tracing options config data.   | `ExternalService` | ` `     | **NO**   |
-| ``[loki]``       | Grafana Loki options config data.     | `ExternalService` | ` `     | **NO**   |
-| ``[tempo]``      | Tempo tracer config data.             | `ExternalService` | ` `     | **NO**   |
-| ``[prometheus]`` | Prometheus monitoring config data.    | `ExternalService` | ` `     | **NO**   |
-| ``[redis]``      | Redis cache config data.              | `ExternalService` | ` `     | **NO**   |
+| Parameter                     | Description                                                                           | Type                | Default | Required |
+|:------------------------------|:--------------------------------------------------------------------------------------|:--------------------|:--------|:---------|
+| ``environment``               | Website environment.                                                                  | `string`            | ` `     | **NO**   |
+| ``service``                   | Website service identifier as string.                                                 | `string`            | ` `     | **NO**   |
+| ``[server]``                  | Http server config data.                                                              | `Server`            | ` `     | **YES**  |
+| ``[token]``                   | Token data config data.                                                               | `Token`             | ` `     | **NO**   |
+| ``[mongodb]``                 | Postgres database config data.                                                        | `Database`          | ` `     | **NO**   |
+| ``[mysql]``                   | MySql database config data.                                                           | `Database`          | ` `     | **NO**   |
+| ``[postgres]``                | Postgres database config data.                                                        | `Database`          | ` `     | **NO**   |
+| ``[audit]``                   | Auditing options config data.                                                         | `ExternalService`   | ` `     | **NO**   |
+| ``[jaeger]``                  | Jaeger tracing options config data.                                                   | `ExternalService`   | ` `     | **NO**   |
+| ``[loki]``                    | Grafana Loki options config data.                                                     | `ExternalService`   | ` `     | **NO**   |
+| ``[tempo]``                   | Tempo tracer config data.                                                             | `ExternalService`   | ` `     | **NO**   |
+| ``[prometheus]``              | Prometheus monitoring config data.                                                    | `ExternalService`   | ` `     | **NO**   |
+| ``[redis]``                   | Redis cache config data.                                                              | `ExternalService`   | ` `     | **NO**   |
+| ``[settings]`` <sup>(1)</sup> | Holds mapped key-value attributes.<br/> Allows an undefined number of new attributes. | `map[string]string` | ` `     | **NO**   |
+
+> <sup>(1)</sup> Settings are just available for `json`, `toml` and `yaml`.
 
 ### 1.1. Server type
 
