@@ -72,6 +72,11 @@ const configContent = `{
     "enabled": true,
     "host": "redis.domain",
     "token": "redis.token"
+  },
+  "settings": {
+	"setting1":"value1",
+	"setting2":"value2",
+	"setting3":"value3"
   }
 }`
 
@@ -105,6 +110,11 @@ func TestLoad(t *testing.T) {
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
 	)
+	settings := map[string]string{
+		"setting1": "value1",
+		"setting2": "value2",
+		"setting3": "value3",
+	}
 	configTest := config.Config{
 		Server: config.Server{
 			Host:           serverHost,
@@ -171,6 +181,7 @@ func TestLoad(t *testing.T) {
 		},
 		Environment: environment,
 		Service:     service,
+		Settings:    settings,
 	}
 
 	t.Run("should return a valid config from json file", func(t *testing.T) {
@@ -273,6 +284,11 @@ func TestLoadContent(t *testing.T) {
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
 	)
+	settings := map[string]string{
+		"setting1": "value1",
+		"setting2": "value2",
+		"setting3": "value3",
+	}
 	configTest := config.Config{
 		Server: config.Server{
 			Host:           serverHost,
@@ -339,6 +355,7 @@ func TestLoadContent(t *testing.T) {
 		},
 		Environment: environment,
 		Service:     service,
+		Settings:    settings,
 	}
 
 	t.Run("should return a valid config from json", func(t *testing.T) {
