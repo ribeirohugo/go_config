@@ -162,6 +162,7 @@ func Load() (config.Config, error) {
 		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
+		Settings:    getStringMap("SETTINGS"),
 	}
 
 	return cfg, nil
@@ -188,4 +189,24 @@ func getBool(key string) (bool, error) {
 		return false, nil
 	}
 	return false, fmt.Errorf("invalid %s bool value: %s", key, rawBoolValue)
+}
+
+func getStringMap(envVar string) map[string]string {
+	result := make(map[string]string)
+	raw := os.Getenv(envVar)
+	if raw == "" {
+		return result
+	}
+
+	pairs := strings.Split(raw, ",")
+	for _, pair := range pairs {
+		parts := strings.SplitN(pair, "=", 2)
+		if len(parts) == 2 {
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+			result[key] = value
+		}
+	}
+
+	return result
 }
