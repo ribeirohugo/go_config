@@ -25,7 +25,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[redis]``                   | Redis cache config data.                                                              | `ExternalService`   | ` `     | **NO**   |
 | ``[settings]`` <sup>(1)</sup> | Holds mapped key-value attributes.<br/> Allows an undefined number of new attributes. | `map[string]string` | ` `     | **NO**   |
 
-> <sup>(1)</sup> Settings are just available for `json`, `toml` and `yaml`.
+> <sup>(1)</sup> Settings is not available to `xml` loader.
 
 ### 1.1. Server type
 
@@ -45,10 +45,10 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``host``            | Database host.                                      | `string` | ` `                                          | **YES**  |
 | ``migrations_path`` | Migrations directory path.                          | `string` | `file://migrations/<mongo><mysql><postgres>` | **NO**   |
 | ``password``        | Database password.                                  | `string` | ` `                                          | **YES**  |
-| ``port``            | Database port.                                      | `int`    | `3306`, `5432`, `27017` <sup>(1)</sup>       | **YES**  |
+| ``port``            | Database port.                                      | `int`    | `3306`, `5432`, `27017` <sup>(2)</sup>       | **YES**  |
 | ``user``            | Database user with needed privileges over database. | `string` | ` `                                          | **YES**  |
 
-> <sup>(1)</sup> `3306` for MySQL, `5432` for Postgres and `27017` for MongoDB. 
+> <sup>(2)</sup> `3306` for MySQL, `5432` for Postgres and `27017` for MongoDB. 
 
 ### 1.3. Token type
 
@@ -62,10 +62,10 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | Parameter  | Description                      | Type     | Default            | Required |
 |:-----------|:---------------------------------|:---------|:-------------------|:---------|
 | ``Enable`` | Enable flag to activate tracing. | `bool`   | `FALSE`            | **NO**   |
-| ``Host``   | Service host address.            | `string` | ` ` <sup>(2)</sup> | **NO**   |
+| ``Host``   | Service host address.            | `string` | ` ` <sup>(3)</sup> | **NO**   |
 | ``Token``  | Service token string.            | `string` | ` `                | **NO**   |
 
-> <sup>(2)</sup> Host default values are specified in `External Host Default Values` table.
+> <sup>(3)</sup> Host default values are specified in `External Host Default Values` table.
 
 ### 1.4.1. External Host Default Values
 

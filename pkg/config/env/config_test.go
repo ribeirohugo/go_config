@@ -69,7 +69,13 @@ func TestLoad(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		envSettings     = "setting1=value1,setting2=value2,setting3=value3"
 	)
+	settings := map[string]string{
+		"setting1": "value1",
+		"setting2": "value2",
+		"setting3": "value3",
+	}
 	expectedCfg := config.Config{
 		Server: config.Server{
 			Host:           serverHost,
@@ -136,6 +142,7 @@ func TestLoad(t *testing.T) {
 		},
 		Environment: environment,
 		Service:     service,
+		Settings:    settings,
 	}
 
 	t.Run("with valid environment variables", func(t *testing.T) {
@@ -219,6 +226,8 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("ENVIRONMENT", environment)
 		require.NoError(t, err)
+		err = os.Setenv("SETTINGS", envSettings)
+		require.NoError(t, err)
 		defer func() {
 			unsetEnvVars(t,
 				"SERVER_HOST",
@@ -261,6 +270,7 @@ func TestLoad(t *testing.T) {
 				"REDIS_TOKEN",
 				"SERVICE",
 				"ENVIRONMENT",
+				"SETTINGS",
 			)
 		}()
 
@@ -298,6 +308,7 @@ func TestLoad(t *testing.T) {
 			Token: config.Token{
 				MaxAge: config.DefaultSessionMaxAge,
 			},
+			Settings: map[string]string{},
 		}
 
 		cfg, err := Load()
