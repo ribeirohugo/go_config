@@ -91,8 +91,8 @@ go get github.com/ribeirohugo/go_config@latest
 
 ### 2.1. Environment
 
-Then, data can be loaded by calling `Load` method.
-It loads config variables from environment.
+OS environment data can be loaded by calling `Load` method.
+It will load config variables from environment.
 
 ```
 os.SetVar("SERVER_HOST", "localhost")
@@ -117,10 +117,12 @@ It will return a `config.Config` struct variable or an error, if anything unexpe
 
 ### 2.2. Toml
 
-Then, data can be loaded by calling `Load` method.
+Data can be loaded using `toml` package, by calling `Load` method.
 It supports a `config.toml` file properly fulfilled.
 
 ```
+configFile := "config.toml"
+
 cfg, err := env.Load(configFile)
 if err != nil {
     log.Fatal(err)
@@ -131,9 +133,11 @@ It will return a `config.Config` struct variable or an error, if anything unexpe
 
 ### 2.3. YAML
 
-Then, data can be loaded by calling `Load` method, with a `config.yaml` file properly fulfilled.
+`yaml` data can be loaded, by calling `Load` method, with a `config.yaml` file properly fulfilled.
 
 ```
+configFile := "config.yaml"
+
 cfg, err := yaml.Load(configFile)
 if err != nil {
     log.Fatal(err)
@@ -144,9 +148,11 @@ It will return a `config.Config` struct variable or an error, if anything unexpe
 
 ### 2.4. JSON
 
-Then, data can be loaded by calling `Load` method, with a `config.json` file properly fulfilled.
+`json` data can be loaded, by calling `Load` method, with a `config.json` file properly fulfilled.
 
 ```
+configFile := "config.json"
+
 cfg, err := json.Load(configFile)
 if err != nil {
     log.Fatal(err)
@@ -157,10 +163,27 @@ It will return a `config.Config` struct variable or an error, if anything unexpe
 
 ### 2.5. XML
 
-Then, data can be loaded by calling `Load` method, with a `config.json` file properly fulfilled.
+`xml` data can be loaded, by calling `Load` method, with a `config.xml` file properly fulfilled.
 
 ```
+configFile := "config.xml"
+
 cfg, err := xml.Load(configFile)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+It will return a `config.Config` struct variable or an error, if anything unexpected occurs.
+
+### 2.6. Dotenv
+
+`dotenv` data can be loaded, by calling `Load` method, with a `.env` file properly fulfilled.
+
+```
+configFile := ".env"
+
+cfg, err := dotenv.Load(configFile)
 if err != nil {
     log.Fatal(err)
 }
