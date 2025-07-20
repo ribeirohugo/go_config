@@ -13,7 +13,7 @@ const (
 	defaultInt = 0
 )
 
-// Load loads configurations from a given json file path.
+// Load loads configurations from the OS environment.
 func Load() (config.Config, error) {
 	serverPort, err := getNumber("SERVER_PORT", defaultInt)
 	if err != nil {
