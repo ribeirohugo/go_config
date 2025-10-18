@@ -23,6 +23,7 @@ Check out the following tables to know all ``Config`` parameters detailed.
 | ``[tempo]``                   | Tempo tracer config data.                                                             | `ExternalService`   | ` `     | **NO**   |
 | ``[prometheus]``              | Prometheus monitoring config data.                                                    | `ExternalService`   | ` `     | **NO**   |
 | ``[redis]``                   | Redis cache config data.                                                              | `ExternalService`   | ` `     | **NO**   |
+| ``[ai_agent]``                | AI agent configuration with model and provider description.                           | `AIAgent`           | ` `     | **NO**   |
 | ``[settings]`` <sup>(1)</sup> | Holds mapped key-value attributes.<br/> Allows an undefined number of new attributes. | `map[string]string` | ` `     | **NO**   |
 
 > <sup>(1)</sup> Settings is not available to `xml` loader.
@@ -57,7 +58,16 @@ To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
 | ``secret``     | Website token secret string.              | `string` | ` `      | **YES**  |
 | ``max_age``    | Maximum duration of a token (in seconds). | `int`    | `86400`  | **NO**   |
 
-### 1.4. External Service type
+### 1.4. AI Agent
+
+| Parameter    | Description                                           | Type     | Default | Required |
+|:-------------|:------------------------------------------------------|:---------|:--------|:---------|
+| ``provider`` | AI agent provider identification name or description. | `string` | ` `     | **NO**   |
+| ``host``     | AI agent host address.                                | `string` | ` `     | **NO**   |
+| ``token``    | Authorization token to AI agent.                      | `string` | ` `     | **NO**   |
+| ``model``    | AI model identification.                              | `string` | ` `     | **NO**   |
+
+### 1.5. External Service type
 
 | Parameter  | Description                      | Type     | Default            | Required |
 |:-----------|:---------------------------------|:---------|:-------------------|:---------|
