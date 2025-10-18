@@ -66,6 +66,11 @@ TRACER_ENABLED=true
 TRACER_HOST=https://tracer.domain
 TRACER_TOKEN=https://tracer.domain
 
+AI_AGENT_PROVIDER=ai.provider
+AI_AGENT_HOST=https://aiagent.domain
+AI_AGENT_TOKEN=ai.token
+AI_AGENT_MODEL=ai.model
+
 SETTINGS=setting1=value1,setting2=value2,setting3=value3
 `
 
@@ -96,6 +101,10 @@ func TestLoad(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		aiAgentProvider = "ai.provider"
+		aiAgentHost     = "ai.domain"
+		aiAgentToken    = "ai.token"
+		aiAgentModel    = "ai.model"
 		envSettings     = "setting1=value1,setting2=value2,setting3=value3"
 	)
 	settings := map[string]string{
@@ -166,6 +175,12 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    redisHost,
 			Token:   redisToken,
+		},
+		AIAgent: config.AIAgent{
+			Provider: aiAgentProvider,
+			Host:     aiAgentHost,
+			Token:    aiAgentToken,
+			Model:    aiAgentModel,
 		},
 		Environment: environment,
 		Service:     service,
@@ -249,6 +264,14 @@ func TestLoad(t *testing.T) {
 		require.NoError(t, err)
 		err = os.Setenv("REDIS_TOKEN", redisToken)
 		require.NoError(t, err)
+		err = os.Setenv("AI_AGENT_PROVIDER", aiAgentProvider)
+		require.NoError(t, err)
+		err = os.Setenv("AI_AGENT_HOST", aiAgentHost)
+		require.NoError(t, err)
+		err = os.Setenv("AI_AGENT_TOKEN", aiAgentToken)
+		require.NoError(t, err)
+		err = os.Setenv("AI_AGENT_MODEL", aiAgentModel)
+		require.NoError(t, err)
 		err = os.Setenv("SERVICE", service)
 		require.NoError(t, err)
 		err = os.Setenv("ENVIRONMENT", environment)
@@ -295,6 +318,10 @@ func TestLoad(t *testing.T) {
 				"REDIS_ENABLED",
 				"REDIS_HOST",
 				"REDIS_TOKEN",
+				"AI_AGENT_PROVIDER",
+				"AI_AGENT_HOST",
+				"AI_AGENT_TOKEN",
+				"AI_AGENT_MODEL",
 				"SERVICE",
 				"ENVIRONMENT",
 				"SETTINGS",
@@ -381,6 +408,10 @@ func TestLoad(t *testing.T) {
 				"REDIS_ENABLED",
 				"REDIS_HOST",
 				"REDIS_TOKEN",
+				"AI_AGENT_PROVIDER",
+				"AI_AGENT_HOST",
+				"AI_AGENT_TOKEN",
+				"AI_AGENT_MODEL",
 				"SERVICE",
 				"ENVIRONMENT",
 				"SETTINGS",

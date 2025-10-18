@@ -160,6 +160,12 @@ func Load() (config.Config, error) {
 			Host:    redisHost,
 			Token:   os.Getenv("REDIS_TOKEN"),
 		},
+		AIAgent: config.AIAgent{
+			Provider: os.Getenv("AI_AGENT_PROVIDER"),
+			Host:     os.Getenv("AI_AGENT_HOST"),
+			Token:    os.Getenv("AI_AGENT_TOKEN"),
+			Model:    os.Getenv("AI_AGENT_MODEL"),
+		},
 		Environment: os.Getenv("ENVIRONMENT"),
 		Service:     os.Getenv("SERVICE"),
 		Settings:    getStringMap("SETTINGS"),

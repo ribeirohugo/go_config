@@ -74,6 +74,12 @@ const configContent = `<config>
         <host>redis.domain</host>
         <token>redis.token</token>
     </redis>
+	<ai_agent>
+		<provider>ai.provider</provider>
+		<host>ai.domain</host>
+		<token>ai.token</token>
+		<model>ai.model</model>
+	</ai_agent>
 </config>
 `
 
@@ -109,6 +115,10 @@ func TestLoad(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		aiAgentProvider = "ai.provider"
+		aiAgentHost     = "ai.domain"
+		aiAgentToken    = "ai.token"
+		aiAgentModel    = "ai.model"
 	)
 	configTest := config.XML{
 		XMLName: xml.Name{
@@ -177,6 +187,12 @@ func TestLoad(t *testing.T) {
 				Enabled: true,
 				Host:    redisHost,
 				Token:   redisToken,
+			},
+			AIAgent: config.AIAgent{
+				Provider: aiAgentProvider,
+				Host:     aiAgentHost,
+				Token:    aiAgentToken,
+				Model:    aiAgentModel,
 			},
 			Environment: environment,
 			Service:     service,
@@ -281,6 +297,10 @@ func TestLoadContent(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		aiAgentProvider = "ai.provider"
+		aiAgentHost     = "ai.domain"
+		aiAgentToken    = "ai.token"
+		aiAgentModel    = "ai.model"
 	)
 	configTest := config.XML{
 		XMLName: xml.Name{
@@ -349,6 +369,12 @@ func TestLoadContent(t *testing.T) {
 				Enabled: true,
 				Host:    redisHost,
 				Token:   redisToken,
+			},
+			AIAgent: config.AIAgent{
+				Provider: aiAgentProvider,
+				Host:     aiAgentHost,
+				Token:    aiAgentToken,
+				Model:    aiAgentModel,
 			},
 			Environment: environment,
 			Service:     service,
