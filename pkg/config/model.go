@@ -21,6 +21,8 @@ type Config struct {
 	Prometheus ExternalService `toml:"prometheus" yaml:"prometheus" json:"prometheus,omitempty" xml:"prometheus"`
 	Redis      ExternalService `toml:"redis" yaml:"redis" json:"redis,omitempty" xml:"redis"`
 
+	AIAgent AIAgent `toml:"aiAgent" yaml:"aiAgent" json:"aiAgent,omitempty" xml:"aiAgent"`
+
 	Environment string `toml:"environment" yaml:"environment" json:"environment,omitempty" xml:"environment"`
 	Service     string `toml:"service" yaml:"service" json:"service,omitempty" xml:"service"`
 
@@ -32,6 +34,13 @@ type XML struct {
 	Config
 
 	XMLName xml.Name `xml:"config"`
+}
+
+type AIAgent struct {
+	Host     string `toml:"host" yaml:"host" json:"host,omitempty" xml:"host"`
+	Username string `toml:"username" yaml:"username" json:"username,omitempty" xml:"username"`
+	Password string `toml:"password" yaml:"password" json:"password,omitempty" xml:"password"`
+	Model    string `toml:"model" yaml:"model" json:"model,omitempty" xml:"model"`
 }
 
 // Database holds database connection configurations.
