@@ -78,6 +78,12 @@ enabled = true
 jaeger_host = "https://tracer.domain"
 host = "https://tracer.domain"
 
+[ai_agent]
+provider = "ai.provider"
+host = "ai.domain"
+token = "ai.token"
+model = "ai.model"
+
 [settings]
 setting1 = "value1"
 setting2 = "value2"
@@ -111,6 +117,10 @@ func TestLoad(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		aiAgentProvider = "ai.provider"
+		aiAgentHost     = "ai.domain"
+		aiAgentToken    = "ai.token"
+		aiAgentModel    = "ai.model"
 	)
 	settings := map[string]string{
 		"setting1": "value1",
@@ -180,6 +190,12 @@ func TestLoad(t *testing.T) {
 			Enabled: true,
 			Host:    redisHost,
 			Token:   redisToken,
+		},
+		AIAgent: config.AIAgent{
+			Provider: aiAgentProvider,
+			Host:     aiAgentHost,
+			Token:    aiAgentToken,
+			Model:    aiAgentModel,
 		},
 		Environment: environment,
 		Service:     service,
@@ -278,6 +294,10 @@ func TestLoadContent(t *testing.T) {
 		jaegerToken     = "jaeger.token"
 		redisHost       = "redis.domain"
 		redisToken      = "redis.token"
+		aiAgentProvider = "ai.provider"
+		aiAgentHost     = "ai.domain"
+		aiAgentToken    = "ai.token"
+		aiAgentModel    = "ai.model"
 	)
 	settings := map[string]string{
 		"setting1": "value1",
@@ -347,6 +367,12 @@ func TestLoadContent(t *testing.T) {
 			Enabled: true,
 			Host:    redisHost,
 			Token:   redisToken,
+		},
+		AIAgent: config.AIAgent{
+			Provider: aiAgentProvider,
+			Host:     aiAgentHost,
+			Token:    aiAgentToken,
+			Model:    aiAgentModel,
 		},
 		Environment: environment,
 		Service:     service,
