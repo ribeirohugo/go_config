@@ -89,6 +89,11 @@ linters:
           - staticcheck
         text: "SA9003:"
 
+      # Exclude revive package name check
+      - linters:
+          - revive
+        text: "var-naming: avoid package names that conflict with Go standard library package names"
+
     # Which file paths to exclude: they will be analyzed, but issues from them won't be reported.
     # "/" will be replaced by the current OS file path separator to properly work on Windows.
     # Default: []
