@@ -89,6 +89,11 @@ linters:
           - staticcheck
         text: "SA9003:"
 
+      # Exclude revive package name check
+      - linters:
+          - revive
+        text: "var-naming: avoid package names that conflict with Go standard library package names"
+
     # Which file paths to exclude: they will be analyzed, but issues from them won't be reported.
     # "/" will be replaced by the current OS file path separator to properly work on Windows.
     # Default: []
@@ -251,7 +256,7 @@ run:
 
   # Define the Go version limit.
   # Default: use Go version from the go.mod file, fallback on the env var `GOVERSION`, fallback on 1.22.
-  go: '1.24'
+  go: '1.26'
 
   # Number of operating system threads (`GOMAXPROCS`) that can execute golangci-lint simultaneously.
   # Default: 0 (automatically set to match Linux container CPU quota and
